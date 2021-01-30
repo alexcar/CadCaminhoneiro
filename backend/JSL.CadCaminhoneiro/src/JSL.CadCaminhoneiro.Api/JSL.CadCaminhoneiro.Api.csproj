@@ -32,5 +32,9 @@
     <ProjectReference Include="..\JSL.CadCaminhoneiro.Domain\JSL.CadCaminhoneiro.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 
 </Project>
