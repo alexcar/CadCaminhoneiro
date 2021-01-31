@@ -21,7 +21,6 @@ namespace JSL.CadCaminhoneiro.Data.Mapping
                 .HasColumnType("tinyint");
 
             builder.Property(p => p.Observacao)
-                .IsRequired()
                 .HasColumnType("varchar(30)");
 
             builder.Property(p => p.DataCriacao)

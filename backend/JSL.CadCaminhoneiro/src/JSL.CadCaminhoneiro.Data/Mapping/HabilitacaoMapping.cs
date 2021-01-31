@@ -33,7 +33,6 @@ namespace JSL.CadCaminhoneiro.Data.Mapping
                 .HasColumnType("datetime");
 
             builder.Property(p => p.Observacao)
-                .IsRequired()
                 .HasColumnType("varchar(50)");
 
             builder.Property(p => p.DataCriacao)

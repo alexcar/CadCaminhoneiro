@@ -14,11 +14,11 @@ namespace JSL.CadCaminhoneiro.Data.Mapping
 
             builder.Property(p => p.Descricao)
                 .IsRequired()
-                .HasColumnType("varchar(8)");
+                .HasColumnType("varchar(50)");
 
             builder.Property(p => p.Ano)
                 .IsRequired()
-                .HasColumnType("varchar(8)");
+                .HasColumnType("varchar(4)");
 
             builder.Property(p => p.DataCriacao)
                 .IsRequired()
