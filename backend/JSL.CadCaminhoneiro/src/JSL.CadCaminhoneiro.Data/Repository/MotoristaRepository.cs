@@ -21,8 +21,15 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             throw new NotImplementedException();
         }
 
+        public async Task IncluirAsync(Motorista entity)
+        {
+            await _context.Motorista.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AlterarAsync(Motorista entity)
         {
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }        
 
@@ -56,13 +63,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             return await _context.Motorista
                     .AsNoTracking()
                     .AnyAsync(p => p.Habilitacao.NumeroRegistro == numeroRegistro);
-        }
-
-        public async Task IncluirAsync(Motorista entity)
-        {
-            await _context.Motorista.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
+        }        
 
         public async Task<IEnumerable<Motorista>> ListarTodosAsync(string ordenacao)
         {

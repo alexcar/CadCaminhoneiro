@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using JSL.CadCaminhoneiro.Data.Repository.Extensions;
 using JSL.CadCaminhoneiro.Data.Repository.QueryObjects;
@@ -17,18 +16,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         public MarcaCaminhaoRepository(CadCaminhoneiroContext context)
         {
             _context = context;
-        }
-
-        public async Task AlterarAsync(MarcaCaminhao entity)
-        {
-            await _context.SaveChangesAsync();
         }        
-
-        public async Task ExcluirAsync(MarcaCaminhao entity)
-        {
-            _context.MarcaCaminhao.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
 
         public async Task<bool> ExisteAsync(Guid id)
         {
@@ -42,13 +30,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             return await _context.MarcaCaminhao
                 .AsNoTracking()
                 .AnyAsync(p => p.Descricao == descricao);
-        }
-
-        public async Task IncluirAsync(MarcaCaminhao entity)
-        {
-            await _context.MarcaCaminhao.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
+        }        
 
         public async Task<IEnumerable<MarcaCaminhao>> ListarTodosAsync(string ordenacao)
         {
@@ -87,14 +69,14 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         {
             return await _context.MarcaCaminhao
                 .AsNoTracking()
-                .SingleAsync(p => p.Descricao == descricao);
+                .FirstOrDefaultAsync(p => p.Descricao == descricao);
         }
 
         public async Task<MarcaCaminhao> ObterPorIdAsync(Guid id)
         {
             return await _context.MarcaCaminhao
                 .AsNoTracking()
-                .SingleAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<MarcaCaminhaoListDto> ObterPorIdQueryResponseAsync(Guid id)
@@ -110,6 +92,24 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             return await _context.MarcaCaminhao
                 .MapMarcaCaminhaoToDto()
                 .ApplyFilter(filter).CountAsync();
+        }
+
+        public async Task IncluirAsync(MarcaCaminhao entity)
+        {
+            await _context.MarcaCaminhao.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AlterarAsync(MarcaCaminhao entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ExcluirAsync(MarcaCaminhao entity)
+        {
+            _context.MarcaCaminhao.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public void Dispose()

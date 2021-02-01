@@ -13,6 +13,7 @@ namespace JSL.CadCaminhoneiro.Domain.Interfaces
         Task<bool> ExisteAsync(Guid id);
         Task<ModeloCaminhao> ObterOriginalAsync(Guid id);
         Task<ModeloCaminhao> ObterPorDescricaoAsync(string descricao);
+        Task<ModeloCaminhao> ObterPorDescricaoAnoAsync(string descricao, string ano);
         Task<int> ObterTotalRegistrosAsync(string filter);
         Task<bool> ExistePorDescricaoAsync(string descricao);
     }

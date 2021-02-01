@@ -12,6 +12,7 @@ namespace JSL.CadCaminhoneiro.Api.Infrastructure.Installers
         {
             services.AddTransient<IMotoristaService, MotoristaService>();
             services.AddTransient<IMarcaCaminhaoService, MarcaCaminhaoService>();
+            services.AddTransient<IModeloCaminhaoService, ModeloCaminhaoService>();
             services.AddTransient<NotificationContext>();
         }
     }

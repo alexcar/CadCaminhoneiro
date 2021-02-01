@@ -15,9 +15,16 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         {
             _context = context;
         }
-        
+
+        public async Task IncluirAsync(Caminhao entity)
+        {
+            await _context.Caminhao.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AlterarAsync(Caminhao entity)
         {
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }        
 
@@ -37,13 +44,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         public Task<bool> ExistePorDescricaoAsync(string descricao)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task IncluirAsync(Caminhao entity)
-        {
-            await _context.Caminhao.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
+        }        
 
         public async Task<IEnumerable<Caminhao>> ListarTodosAsync(string ordenacao)
         {

@@ -32,7 +32,7 @@ namespace JSL.CadCaminhoneiro.Api.Services
             await ValidarDescricao(entity.Descricao);
 
             if (_notificationContext.HasNotifications)
-                return Guid.Empty;            
+                return Guid.Empty;  
             
             var marcaCaminhao = new MarcaCaminhao(entity.Descricao);
             marcaCaminhao.Incluir(DateTime.Now);
@@ -46,12 +46,12 @@ namespace JSL.CadCaminhoneiro.Api.Services
         {
             var marcaCaminhao = await _repository.ObterOriginalAsync(entity.Id);
 
-            // Se a descrição não foi alterada, não faz nada.
-            if (marcaCaminhao.Descricao.Trim() == entity.Descricao.Trim())
-                return;
-            
-            // Verificar se a nova descrição já existe
-            await ValidarDescricao(entity.Descricao);
+            // Se diferente, valida duplicidade
+            if (!marcaCaminhao.Descricao.Trim().Equals(entity.Descricao.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                // Verificar se a nova descrição já existe
+                await ValidarDescricao(entity.Descricao);
+            }            
 
             if (!_notificationContext.HasNotifications)
             {

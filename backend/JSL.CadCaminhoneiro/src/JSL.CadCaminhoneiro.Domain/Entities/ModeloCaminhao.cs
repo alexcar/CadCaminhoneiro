@@ -8,16 +8,17 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public ModeloCaminhao(
             string descricao, 
             string ano,
-            MarcaCaminhao marcaCaminhao)
+            Guid marcaCaminhaoId)
         {
             Descricao = descricao;
             Ano = ano;
-            MarcaCaminhao = marcaCaminhao;
+            MarcaCaminhaoId = marcaCaminhaoId;
         }
         
         protected ModeloCaminhao() { }
         public string Descricao { get; private set; }
         public string Ano { get; private set; }
+        public Guid MarcaCaminhaoId { get; private set; }
         public MarcaCaminhao MarcaCaminhao { get; private set; }
 
         public void Incluir(DateTime dataCriacao)
@@ -28,12 +29,12 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public void Alterar(
             string descricao, 
             string ano,
-            MarcaCaminhao marcaCaminhao,
+            Guid marcaCaminhaoId,
             DateTime? dataAlteracao)
         {
             Descricao = descricao;
             Ano = ano;
-            MarcaCaminhao = marcaCaminhao;
+            MarcaCaminhaoId = marcaCaminhaoId;
             DataAlteracao = dataAlteracao;
         }
     }

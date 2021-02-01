@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoWrapper.Wrappers;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using Microsoft.AspNetCore.Mvc;
 using JSL.CadCaminhoneiro.Api.Infrastructure.Installers.Pagination;
 using JSL.CadCaminhoneiro.Api.Infrastructure.Notifications;
 using JSL.CadCaminhoneiro.Domain.Interfaces;
@@ -36,6 +36,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             _service = service;
         }
 
+        // GET: api/v1/marca-caminhao
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
@@ -108,8 +109,8 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             {
                 var notification = 
                     _notificationContext.Notifications.Select(p => p.Message).FirstOrDefault();
-                
-                return BadRequest(notification);
+
+                throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
             return Ok(marcaCaminhaoId.ToString());
@@ -126,20 +127,23 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             if (!ModelState.IsValid) { throw new ApiProblemDetailsException(ModelState); }
 
             if (id != alterarRequest.Id || !await _repository.ExisteAsync(id))
-                return NotFound("Marca de caminhão com o Id: {id} não existe.");            
+                throw new ApiProblemDetailsException($"Marca de caminhão com o Id: {id} não existe.", Status404NotFound);
 
             await _service.AlterarAsync(alterarRequest);
 
             if (_notificationContext.HasNotifications)
             {
                 // TODO: Retornar vários erros para testar o retorno de erro como uma lista                
-                //var notification = 
-                //    _notificationContext.Notifications.Select(p => p.Message).FirstOrDefault();
-
                 var notification =
-                    _notificationContext.Notifications.Select(p => p.Message).ToList();
+                    _notificationContext.Notifications.Select(p => p.Message).FirstOrDefault();
 
-                return BadRequest(notification);
+                //var notification =
+                //    _notificationContext.Notifications.Select(p => p.Message).ToList();
+
+                //return BadRequest(notification);
+                // return BadRequest(new ApiException(notification, Status400BadRequest));
+                // return BadRequest(new ApiProblemDetailsException(notification, Status400BadRequest));
+                throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
             return Ok($"Registro com o Id: {id} alterado com sucesso");
@@ -154,12 +158,13 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
             if (marcaCaminhao is null)
             {
-                return NotFound($"Marca de caminhão com o Id: {id} não existe.");
+                // return NotFound($"Marca de caminhão com o Id: {id} não existe.");
+                throw new ApiProblemDetailsException($"Marca de caminhão com o Id: {id} não existe.", Status404NotFound);
             }
 
             await _service.ExcluirAsync(marcaCaminhao);
 
-            return Ok($"marca de caminhão com o Id: {id} excluído com sucesso");
+            return Ok($"Registro com o Id: {id} excluído com sucesso");
         }
     }
 }

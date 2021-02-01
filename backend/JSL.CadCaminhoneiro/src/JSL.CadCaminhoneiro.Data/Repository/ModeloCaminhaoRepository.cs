@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JSL.CadCaminhoneiro.Data.Repository.Extensions;
+using JSL.CadCaminhoneiro.Data.Repository.QueryObjects;
 using JSL.CadCaminhoneiro.Domain.Entities;
 using JSL.CadCaminhoneiro.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,15 +18,66 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             _context = context;
         }
 
-        public async Task AlterarAsync(ModeloCaminhao entity)
+        public async Task<IEnumerable<ModeloCaminhaoListDto>> ListarTodosQueryResponseAsync(
+            string sort, string filter, int pageNumber, int pageSize)
         {
-            await _context.SaveChangesAsync();
-        }        
+            if (string.IsNullOrWhiteSpace(sort))
+                sort = "descricao";
 
-        public async Task ExcluirAsync(ModeloCaminhao entity)
+            return await _context.ModeloCaminhao
+                .AsNoTracking()
+                .MapModeloCaminhaoToDto()
+                .ApplyFilter(filter)
+                .ApplySort(sort)
+                .ApplyPage(pageNumber, pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<ModeloCaminhao> ObterOriginalAsync(Guid id)
         {
-            _context.ModeloCaminhao.Remove(entity);
-            await _context.SaveChangesAsync();
+            return await _context.ModeloCaminhao
+                .AsNoTracking()
+                .SingleAsync(p => p.Id == id);
+        }
+
+        public async Task<ModeloCaminhao> ObterPorDescricaoAsync(string descricao)
+        {
+            // SingleAsync - se não encontrar, vai gerar uma exceção
+
+            return await _context.ModeloCaminhao
+                .AsNoTracking()
+                .SingleAsync(p => p.Descricao == descricao);
+        }
+
+        public async Task<ModeloCaminhao> ObterPorIdAsync(Guid id)
+        {
+            return await _context.ModeloCaminhao
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<ModeloCaminhao> ObterPorDescricaoAnoAsync(string descricao, string ano)
+        {
+            // FirstOrDefaultAsync - se não encontrar, vai retornar null
+
+            return await _context.ModeloCaminhao
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Descricao == descricao && p.Ano == ano);
+        }
+
+        public async Task<ModeloCaminhaoListDto> ObterPorIdQueryResponseAsync(Guid id)
+        {
+            return await _context.ModeloCaminhao
+                    .MapModeloCaminhaoToDto()
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<int> ObterTotalRegistrosAsync(string filter)
+        {
+            return await _context.ModeloCaminhao
+                .MapModeloCaminhaoToDto()
+                .ApplyFilter(filter).CountAsync();
         }
 
         public async Task<bool> ExisteAsync(Guid id)
@@ -41,12 +94,6 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .AnyAsync(p => p.Descricao == descricao);
         }
 
-        public async Task IncluirAsync(ModeloCaminhao entity)
-        {
-            await _context.ModeloCaminhao.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<ModeloCaminhao>> ListarTodosAsync(string ordenacao)
         {
             if (string.IsNullOrWhiteSpace(ordenacao))
@@ -58,45 +105,27 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<ModeloCaminhaoListDto>> ListarTodosQueryResponseAsync(string sort, string filter, int pageNumber, int pageSize)
+        public async Task IncluirAsync(ModeloCaminhao entity)
         {
-            throw new NotImplementedException();
+            await _context.ModeloCaminhao.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<ModeloCaminhao> ObterOriginalAsync(Guid id)
+        public async Task AlterarAsync(ModeloCaminhao entity)
         {
-            return await _context.ModeloCaminhao
-                .AsNoTracking()
-                .SingleAsync(p => p.Id == id);
-        }
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }        
 
-        public async Task<ModeloCaminhao> ObterPorDescricaoAsync(string descricao)
+        public async Task ExcluirAsync(ModeloCaminhao entity)
         {
-            return await _context.ModeloCaminhao
-                .AsNoTracking()
-                .SingleAsync(p => p.Descricao == descricao);
-        }
-
-        public async Task<ModeloCaminhao> ObterPorIdAsync(Guid id)
-        {
-            return await _context.ModeloCaminhao
-                .AsNoTracking()
-                .SingleAsync(p => p.Id == id);
-        }
-
-        public Task<ModeloCaminhaoListDto> ObterPorIdQueryResponseAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> ObterTotalRegistrosAsync(string filter)
-        {
-            throw new NotImplementedException();
-        }
+            _context.ModeloCaminhao.Remove(entity);
+            await _context.SaveChangesAsync();
+        }                
 
         public void Dispose()
         {
             _context?.Dispose();
-        }
+        }        
     }
 }

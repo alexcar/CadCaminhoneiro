@@ -3,16 +3,16 @@ using JSL.CadCaminhoneiro.Domain.Entities;
 
 namespace JSL.CadCaminhoneiro.Data.Repository.Extensions
 {
-    public static class MarcaCaminhaoQueryableApplyFilterExtension
+    public static class ModeloCaminhaoQueryableApplyFilterExtension
     {
-        public static IQueryable<MarcaCaminhaoListDto> ApplyFilter(
-            this IQueryable<MarcaCaminhaoListDto> source, string filter)
+        public static IQueryable<ModeloCaminhaoListDto> ApplyFilter(
+            this IQueryable<ModeloCaminhaoListDto> source, string filter)
         {
             if (filter == null)
                 return source;
 
             var filterList = filter.Split(',');
-            var predicate = PredicateBuilder.False<MarcaCaminhaoListDto>();
+            var predicate = PredicateBuilder.False<ModeloCaminhaoListDto>();
 
             foreach (var item in filterList)
             {

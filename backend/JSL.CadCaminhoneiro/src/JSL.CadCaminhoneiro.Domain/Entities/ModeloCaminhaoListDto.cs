@@ -7,6 +7,6 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public Guid Id { get; set; }
         public string Descricao { get; set; }
         public string Ano { get; set; }
-        public ModeloCaminhaoListDto MarcaCaminhaoListDto { get; set; }
+        public MarcaCaminhaoListDto MarcaCaminhaoListDto { get; set; }
     }
 }
