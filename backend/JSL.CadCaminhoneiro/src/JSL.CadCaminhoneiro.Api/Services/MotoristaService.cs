@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoWrapper.Wrappers;
+using JSL.CadCaminhoneiro.Api.Dto;
 using JSL.CadCaminhoneiro.Api.Infrastructure.Notifications;
 using JSL.CadCaminhoneiro.Domain.Entities;
 using JSL.CadCaminhoneiro.Domain.Interfaces;
@@ -32,12 +33,12 @@ namespace JSL.CadCaminhoneiro.Api.Services
             return await _repository.ListarTodosAsync(ordenacao);
         }
 
-        public Task<Guid> IncluirAsync(Motorista entity)
+        public Task<Guid> IncluirAsync(MotoristaIncluirRequest entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task AlterarAsync(Motorista entity)
+        public Task AlterarAsync(MotoristaAlterarRequest entity)
         {
             throw new NotImplementedException();
         }

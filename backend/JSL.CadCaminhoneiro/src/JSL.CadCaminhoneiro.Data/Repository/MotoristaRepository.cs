@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JSL.CadCaminhoneiro.Data.Repository.Extensions;
+using JSL.CadCaminhoneiro.Data.Repository.QueryObjects;
 using JSL.CadCaminhoneiro.Domain.Entities;
 using JSL.CadCaminhoneiro.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +18,19 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             _context = context;
         }
 
-        public Task<IEnumerable<MotoristaListDto>> ListarTodosQueryResponseAsync(string sort, string filter, int pageNumber, int pageSize)
+        public async Task<IEnumerable<MotoristaListDto>> ListarTodosQueryResponseAsync(
+            string sort, string filter, int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(sort))
+                sort = "nome";
+
+            return await _context.Motorista
+                .AsNoTracking()
+                .MapMotoristaToDto()
+                .ApplyFilter(filter)
+                .ApplySort(sort)
+                .ApplyPage(pageNumber, pageSize)
+                .ToListAsync();
         }
 
         public async Task IncluirAsync(Motorista entity)
@@ -94,9 +106,11 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<int> ObterTotalRegistrosAsync(string filter)
+        public async Task<int> ObterTotalRegistrosAsync(string filter)
         {
-            throw new NotImplementedException();
+            return await _context.Motorista
+                .MapMotoristaToDto()
+                .ApplyFilter(filter).CountAsync();
         }
 
         public void Dispose()

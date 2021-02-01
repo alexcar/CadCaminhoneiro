@@ -1,4 +1,5 @@
-﻿using JSL.CadCaminhoneiro.Domain.Entities;
+﻿using JSL.CadCaminhoneiro.Api.Dto;
+using JSL.CadCaminhoneiro.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace JSL.CadCaminhoneiro.Api.Services
         //Task<bool> BancoExisteAsync(Guid id);
         //Task<Motorista> ObterPorCodigoAsync(string codigo);
         //Task<Motorista> ObterPorNomeAsync(string nome);
-        Task<Guid> IncluirAsync(Motorista entity);
-        Task AlterarAsync(Motorista entity);
+        Task<Guid> IncluirAsync(MotoristaIncluirRequest entity);
+        Task AlterarAsync(MotoristaAlterarRequest entity);
         Task ExcluirAsync(Motorista entity);
     }
 }

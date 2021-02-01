@@ -7,7 +7,7 @@ namespace JSL.CadCaminhoneiro.Api.Dto
         // TODO: Verificar o que vai acontecer quando passar o ID das entidades 
         
         // motorista
-        public Guid MotoristaId { get; set; }
+        public Guid Id { get; set; }
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public DateTime DataNascimento { get; set; }
