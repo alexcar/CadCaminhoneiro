@@ -13,7 +13,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             string municipio,
             string uf,
             string cep)
-        {            
+        {
             Logradouro = logradouro;
             Numero = numero;
             Complemento = complemento;

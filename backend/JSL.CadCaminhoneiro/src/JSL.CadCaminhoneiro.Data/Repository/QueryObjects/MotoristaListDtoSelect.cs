@@ -22,6 +22,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository.QueryObjects
                 EnderecoDto = new EnderecoDto
                 {
                     Id = p.Endereco.Id,
+                    MotoristaId = p.Id,
                     Logradouro = p.Endereco.Logradouro,
                     Numero = p.Endereco.Numero,
                     Complemento = p.Endereco.Complemento,
@@ -33,6 +34,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository.QueryObjects
                 HabilitacaoDto = new HabilitacaoDto
                 {
                     Id = p.Habilitacao.Id,
+                    MotoristaId = p.Id,
                     NumeroRegistro = p.Habilitacao.NumeroRegistro,
                     Categoria = p.Habilitacao.Categoria,
                     DataPrimeiraHabilitacao = p.Habilitacao.DataPrimeiraHabilitacao,
@@ -43,11 +45,11 @@ namespace JSL.CadCaminhoneiro.Data.Repository.QueryObjects
                 CaminhaoDto = new CaminhaoDto
                 {
                     Id = p.Caminhao.Id,
+                    MotoristaId = p.Id,
                     Placa = p.Caminhao.Placa,
                     Eixo = p.Caminhao.Eixo,
                     Observacao = p.Caminhao.Observacao
                 }
-
             });
         }
     }

@@ -33,29 +33,24 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .ToListAsync();
         }
 
-        public async Task IncluirAsync(Motorista entity)
-        {
-            await _context.Motorista.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task AlterarAsync(Motorista entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }        
-
-        public async Task ExcluirAsync(Motorista entity)
-        {
-            _context.Motorista.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<bool> ExisteAsync(Guid id)
         {
             return await _context.Motorista
                 .AsNoTracking()
                 .AnyAsync(p => p.Id == id);
+        }
+
+        public async Task<Motorista> ExisteAsync(
+            string cpf, 
+            string numeroRegistroGeral, 
+            string numeroRegistroHabilitacao)
+        {
+            return await _context.Motorista
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => 
+                    p.Cpf == cpf || 
+                    p.NumeroRegistroGeral == numeroRegistroGeral || 
+                    p.Habilitacao.NumeroRegistro == numeroRegistroHabilitacao);
         }
 
         public async Task<bool> ExistePorCpfAsync(string cpf)
@@ -65,17 +60,19 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                     .AnyAsync(p => p.Cpf == cpf);
         }
 
-        public Task<bool> ExistePorNumeroRegistroGeralAsync(string numeroRegistroGeral)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> ExistePorNumeroRegistroHabilitacaoAsync(string numeroRegistro)
+        public async Task<bool> ExistePorNumeroRegistroGeralAsync(string numeroRegistroGeral)
         {
             return await _context.Motorista
                     .AsNoTracking()
-                    .AnyAsync(p => p.Habilitacao.NumeroRegistro == numeroRegistro);
-        }        
+                    .AnyAsync(p => p.NumeroRegistroGeral == numeroRegistroGeral);
+        }
+
+        public async Task<bool> ExistePorNumeroRegistroHabilitacaoAsync(string numeroRegistroHabilitacao)
+        {
+            return await _context.Habilitacao
+                    .AsNoTracking()
+                    .AnyAsync(p => p.NumeroRegistro == numeroRegistroHabilitacao);
+        }
 
         public async Task<IEnumerable<Motorista>> ListarTodosAsync(string ordenacao)
         {
@@ -86,7 +83,7 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .AsNoTracking()
                 .ApplySort(ordenacao)
                 .ToListAsync();
-        }        
+        }
 
         public async Task<ModeloCaminhao> ObterOriginalAsync(Guid id)
         {
@@ -112,6 +109,45 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .MapMotoristaToDto()
                 .ApplyFilter(filter).CountAsync();
         }
+
+        public async Task<Endereco> ObterEndereco(Guid motoristaId)
+        {
+            return await _context.Endereco
+                .AsNoTracking()
+                .SingleAsync(predicate => predicate.MotoristaId == motoristaId);
+        }
+
+        public async Task<Habilitacao> ObterHabilitacao(Guid motoristaId)
+        {
+            return await _context.Habilitacao
+                .AsNoTracking()
+                .SingleAsync(predicate => predicate.MotoristaId == motoristaId);
+        }
+
+        public async Task<Caminhao> ObterCaminhao(Guid motoristaId)
+        {
+            return await _context.Caminhao
+                .AsNoTracking()
+                .SingleAsync(p => p.MotoristaId == motoristaId);
+        }
+
+        public async Task IncluirAsync(Motorista entity)
+        {
+            await _context.Motorista.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AlterarAsync(Motorista entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }        
+
+        public async Task ExcluirAsync(Motorista entity)
+        {
+            _context.Motorista.Remove(entity);
+            await _context.SaveChangesAsync();
+        }       
 
         public void Dispose()
         {

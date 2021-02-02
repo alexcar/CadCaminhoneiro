@@ -9,14 +9,14 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             string placa,
             byte eixo, // sql server tinyint
             string observacao,
-            MarcaCaminhao marcaCaminhao,
-            ModeloCaminhao modeloCaminhao)
+            Guid marcaCaminhaoId,
+            Guid modeloCaminhaoId)
         {
             Placa = placa;
             Eixo = eixo;
             Observacao = observacao;
-            MarcaCaminhao = marcaCaminhao;
-            ModeloCaminhao = modeloCaminhao;
+            MarcaCaminhaoId = marcaCaminhaoId;
+            ModeloCaminhaoId = modeloCaminhaoId;
         }
         
         protected Caminhao() { }
@@ -42,15 +42,15 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             string placa,
             byte eixo,
             string observacao,
-            MarcaCaminhao marcaCaminhao,
-            ModeloCaminhao modeloCaminhao,
+            Guid marcaCaminhaoId,
+            Guid modeloCaminhaoId,
             DateTime? dataAlteracao)
         {
             Placa = placa;
             Eixo = eixo;
             Observacao = observacao;
-            MarcaCaminhao = marcaCaminhao;
-            ModeloCaminhao = modeloCaminhao;
+            MarcaCaminhaoId = marcaCaminhaoId;
+            ModeloCaminhaoId = modeloCaminhaoId;
             DataAlteracao = dataAlteracao;
         }
     }

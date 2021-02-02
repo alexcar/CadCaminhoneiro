@@ -11,10 +11,14 @@ namespace JSL.CadCaminhoneiro.Domain.Interfaces
         Task<MotoristaListDto> ObterPorIdQueryResponseAsync(Guid id);
         Task<IEnumerable<MotoristaListDto>> ListarTodosQueryResponseAsync(string sort, string filter, int pageNumber, int pageSize);
         Task<bool> ExisteAsync(Guid id);
+        Task<Motorista> ExisteAsync(string cpf, string numeroRegistroGeral, string numeroRegistroHabilitacao);
         Task<ModeloCaminhao> ObterOriginalAsync(Guid id);        
         Task<int> ObterTotalRegistrosAsync(string filter);
+        Task<Endereco> ObterEndereco(Guid motoristaId);
+        Task<Habilitacao> ObterHabilitacao(Guid motoristaId);
+        Task<Caminhao> ObterCaminhao(Guid motoristaId);
         Task<bool> ExistePorCpfAsync(string cpf);
         Task<bool> ExistePorNumeroRegistroGeralAsync(string numeroRegistroGeral);
-        Task<bool> ExistePorNumeroRegistroHabilitacaoAsync(string numeroRegistro);
+        Task<bool> ExistePorNumeroRegistroHabilitacaoAsync(string numeroRegistroHabilitacao);
     }
 }

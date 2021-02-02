@@ -14,10 +14,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             string naturalidade,
             string numeroRegistroGeral,
             string orgaoExpedicaoRegistroGeral,
-            DateTime dataExpedicaoRegistroGeral,
-            Endereco endereco,
-            Habilitacao habilitacao,
-            Caminhao caminhao)
+            DateTime dataExpedicaoRegistroGeral)
         {
             Nome = nome;
             Cpf = cpf;
@@ -28,9 +25,6 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             NumeroRegistroGeral = numeroRegistroGeral;
             OrgaoExpedicaoRegistroGeral = orgaoExpedicaoRegistroGeral;
             DataExpedicaoRegistroGeral = dataExpedicaoRegistroGeral;
-            Endereco = endereco;
-            Habilitacao = habilitacao;
-            Caminhao = caminhao;
         }
         
         protected Motorista() { }
@@ -43,14 +37,31 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public string NumeroRegistroGeral { get; private set; }
         public string OrgaoExpedicaoRegistroGeral { get; private set; }
         public DateTime DataExpedicaoRegistroGeral { get; private set; }
-        
+
         public Endereco Endereco { get; private set; }
+
         public Habilitacao Habilitacao { get; private set; }
+
         public Caminhao Caminhao { get; private set; }
 
         public void Incluir(DateTime dataCriacao)
         {
             DataCriacao = dataCriacao;
+        }
+
+        public void IncluirEndereco(Endereco endereco)
+        {
+            Endereco = endereco;
+        }
+
+        public void IncluirHabilitacao(Habilitacao habilitacao)
+        {
+            Habilitacao = habilitacao;
+        }
+
+        public void IncluirCaminhao(Caminhao caminhao)
+        {
+            Caminhao = caminhao;
         }
 
         public void Alterar(

@@ -20,6 +20,9 @@ namespace JSL.CadCaminhoneiro.Api.Infrastructure.Installers
             services.AddTransient<IValidator<ModeloCaminhaoIncluirRequest>, ModeloCaminhaoIncluirRequestValidator>();
             services.AddTransient<IValidator<ModeloCaminhaoAlterarRequest>, ModeloCaminhaoAlterarRequestValidator>();
 
+            services.AddTransient<IValidator<MotoristaIncluirRequest>, MotoristaIncluirRequestValidator>();
+            services.AddTransient<IValidator<MotoristaAlterarRequest>, MotoristaAlterarRequestValidator>();
+
             //Disable Automatic Model State Validation built-in to ASP.NET Core
             services.Configure<ApiBehaviorOptions>(opt => { opt.SuppressModelStateInvalidFilter = true; });
         }

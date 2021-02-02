@@ -1,13 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using JSL.CadCaminhoneiro.Domain.Entities;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace JSL.CadCaminhoneiro.Data
 {
     public class CadCaminhoneiroContext : DbContext
     {
-        public CadCaminhoneiroContext(DbContextOptions<CadCaminhoneiroContext> options) : base(options)
+        public CadCaminhoneiroContext(DbContextOptions<CadCaminhoneiroContext> options) 
+            : base(options)
         {
+
         }
 
         public DbSet<Motorista> Motorista { get; set; }
@@ -25,6 +29,6 @@ namespace JSL.CadCaminhoneiro.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-        }
+        }        
     }
 }

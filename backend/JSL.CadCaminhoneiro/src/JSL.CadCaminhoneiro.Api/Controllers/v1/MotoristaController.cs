@@ -42,19 +42,28 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [ProducesResponseType(typeof(PagedResponse<IEnumerable<MotoristaListDto>>), Status200OK)]
         public async Task<PagedResponse<IEnumerable<MotoristaListDto>>> ListarTodos([FromQuery] SortFilterPageRequest sortFilterPageRequest)
         {
-            var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(sortFilterPageRequest.PageNumber, sortFilterPageRequest.PageSize);
-            var totalRegistros = await _repository.ObterTotalRegistrosAsync(sortFilterPageRequest.Filter);
+            try
+            {
+                var route = Request.Path.Value;
+                var validFilter = new PaginationFilter(sortFilterPageRequest.PageNumber, sortFilterPageRequest.PageSize);
+                var totalRegistros = await _repository.ObterTotalRegistrosAsync(sortFilterPageRequest.Filter);
 
-            var motoristas = await _repository.ListarTodosQueryResponseAsync(
-                sortFilterPageRequest.Sort, sortFilterPageRequest.Filter,
-                validFilter.PageNumber, validFilter.PageSize);
+                var motoristas = await _repository.ListarTodosQueryResponseAsync(
+                    sortFilterPageRequest.Sort, sortFilterPageRequest.Filter,
+                    validFilter.PageNumber, validFilter.PageSize);
 
-            var pagedResponse =
-                PaginationHelper.CreatePagedReponse<MotoristaListDto>(
-                    motoristas, validFilter, totalRegistros, _uriService, route);
+                var pagedResponse =
+                    PaginationHelper.CreatePagedReponse<MotoristaListDto>(
+                        motoristas, validFilter, totalRegistros, _uriService, route);
 
-            return pagedResponse;
+                return pagedResponse;
+            }
+            catch (Exception e)
+            {
+
+                var msg = e.Message;
+                throw;
+            }            
         }
 
         // GET: api/v1/motorista/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e

@@ -8,7 +8,7 @@ namespace JSL.CadCaminhoneiro.Api.Dto
         public MotoristaAlterarRequestValidator()
         {
             // motorista
-            RuleFor(p => p.MotoristaId).NotEqual(Guid.Empty)
+            RuleFor(p => p.Id).NotEqual(Guid.Empty)
                 .WithMessage("O Id do motorista é obrigatório");
 
             RuleFor(p => p.Nome).NotEmpty()
