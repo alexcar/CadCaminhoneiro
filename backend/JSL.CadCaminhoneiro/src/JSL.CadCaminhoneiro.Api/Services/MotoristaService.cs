@@ -132,7 +132,7 @@ namespace JSL.CadCaminhoneiro.Api.Services
                 return;
             }
 
-            var modeloCaminhao = await _modeloCaminhaoRepository.ObterPorIdAsync(entity.MarcaCaminhaoId);
+            var modeloCaminhao = await _modeloCaminhaoRepository.ObterPorIdAsync(entity.ModeloCaminhaoId);
 
             if (modeloCaminhao is null)
             {
@@ -144,10 +144,10 @@ namespace JSL.CadCaminhoneiro.Api.Services
             var motorista = await _repository.ObterPorIdAsync(entity.Id);
             
             // Se cpf diferente, valida duplicidade
-            if (entity.Cpf != motorista.Cpf)
+            if (entity.Cpf.Trim() != motorista.Cpf.Trim())
             {
                 // Verifica se o novo cpf já existe
-                var existeMotoristaPorCpf = await _repository.ExistePorCpfAsync(entity.Cpf);
+                var existeMotoristaPorCpf = await _repository.ExistePorCpfAsync(entity.Cpf.Trim());
 
                 if (existeMotoristaPorCpf)
                 {
@@ -158,10 +158,11 @@ namespace JSL.CadCaminhoneiro.Api.Services
             }
 
             // Se RG diferente, valida duplicidade
-            if (entity.NumeroRegistroGeral != motorista.NumeroRegistroGeral)
+            if (entity.NumeroRegistroGeral.Trim() != motorista.NumeroRegistroGeral.Trim())
             {
                 // Verifica se o novo RG já existe
-                var existeMotoristaPorRg = await _repository.ExistePorNumeroRegistroGeralAsync(entity.NumeroRegistroGeral);
+                var existeMotoristaPorRg = await 
+                    _repository.ExistePorNumeroRegistroGeralAsync(entity.NumeroRegistroGeral.Trim());
 
                 if (existeMotoristaPorRg)
                 {
@@ -172,10 +173,11 @@ namespace JSL.CadCaminhoneiro.Api.Services
             }
 
             // Se CHN diferente, valida duplicidade
-            if (entity.NumeroRegistroHabilitacao != motorista.Habilitacao.NumeroRegistro)
+            if (entity.NumeroRegistroHabilitacao.Trim() != motorista.Habilitacao.NumeroRegistro.Trim())
             {
                 // Verifica se a nova CHN já existe
-                var existeMotoristaPorChn = await _repository.ExistePorNumeroRegistroHabilitacaoAsync(entity.NumeroRegistroHabilitacao);
+                var existeMotoristaPorChn = await 
+                    _repository.ExistePorNumeroRegistroHabilitacaoAsync(entity.NumeroRegistroHabilitacao.Trim());
 
                 if (existeMotoristaPorChn)
                 {
@@ -185,21 +187,18 @@ namespace JSL.CadCaminhoneiro.Api.Services
                 }
             }
 
-            var endereco = await _repository.ObterEndereco(entity.Id);
-            endereco.Alterar(
-                entity.Logradouro, entity.Numero, entity.Complemento, 
-                entity.Bairro, entity.Municipio, entity.Uf, entity.Cep, DateTime.Now);
+            motorista.Endereco.Alterar(
+                entity.Logradouro, entity.Numero, entity.Complemento,
+                entity.Bairro, entity.Municipio, entity.Uf, entity.Cep, DateTime.Now);            
 
-            var habilitacao = await _repository.ObterHabilitacao(entity.Id);
-            habilitacao.Alterar(
-                entity.NumeroRegistroHabilitacao, entity.CategoriaHabilitacao, 
-                entity.DataPrimeiraHabilitacao, entity.DataValidadeHabilitacao, 
+            motorista.Habilitacao.Alterar(
+                entity.NumeroRegistroHabilitacao, entity.CategoriaHabilitacao,
+                entity.DataPrimeiraHabilitacao, entity.DataValidadeHabilitacao,
                 entity.DataEmissaoHabilitacao, entity.ObservacaoHabilitacao, DateTime.Now);
 
-            var caminhao = await _repository.ObterCaminhao(entity.Id);
-            caminhao.Alterar(
-                entity.Placa, entity.Eixo, entity.CaminhaoObservacao, 
-                marcaCaminhao.Id, modeloCaminhao.Id, DateTime.Now);
+            motorista.Caminhao.Alterar(
+                entity.Placa, entity.Eixo, entity.CaminhaoObservacao,
+                marcaCaminhao.Id, modeloCaminhao.Id, DateTime.Now);            
 
             motorista.Alterar(
                 entity.Nome,
@@ -211,10 +210,7 @@ namespace JSL.CadCaminhoneiro.Api.Services
                 entity.NumeroRegistroGeral,
                 entity.OrgaoExpedicaoRegistroGeral,
                 entity.DataExpedicaoRegistroGeral,
-                endereco,
-                habilitacao,
-                caminhao, DateTime.Now
-                );
+                DateTime.Now);
             await _repository.AlterarAsync(motorista);
         }
 

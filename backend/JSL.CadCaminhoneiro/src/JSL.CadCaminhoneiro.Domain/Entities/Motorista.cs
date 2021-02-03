@@ -74,9 +74,6 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             string numeroRegistroGeral,
             string orgaoExpedicaoRegistroGeral,
             DateTime dataExpedicaoRegistroGeral,
-            Endereco endereco,
-            Habilitacao habilitacao,
-            Caminhao caminhao,
             DateTime? dataAlteracao)
         {
             Nome = nome;
@@ -88,9 +85,6 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             NumeroRegistroGeral = numeroRegistroGeral;
             OrgaoExpedicaoRegistroGeral = orgaoExpedicaoRegistroGeral;
             DataExpedicaoRegistroGeral = dataExpedicaoRegistroGeral;
-            Endereco = endereco;
-            Habilitacao = habilitacao;
-            Caminhao = caminhao;
             DataAlteracao = dataAlteracao;
         }
     }

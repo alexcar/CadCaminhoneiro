@@ -94,6 +94,9 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         public async Task<Motorista> ObterPorIdAsync(Guid id)
         {
             return await _context.Motorista
+                    .Include(p => p.Endereco)
+                    .Include(p => p.Habilitacao)
+                    .Include(p => p.Caminhao)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -140,6 +143,9 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         public async Task AlterarAsync(Motorista entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity.Endereco).State = EntityState.Modified;
+            _context.Entry(entity.Habilitacao).State = EntityState.Modified;
+            _context.Entry(entity.Caminhao).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }        
 
