@@ -48,7 +48,18 @@ namespace JSL.CadCaminhoneiro.Data.Repository.QueryObjects
                     MotoristaId = p.Id,
                     Placa = p.Caminhao.Placa,
                     Eixo = p.Caminhao.Eixo,
-                    Observacao = p.Caminhao.Observacao
+                    Observacao = p.Caminhao.Observacao,
+                    MarcaCaminhaoListDto = new MarcaCaminhaoListDto
+                    {
+                        Id = p.Caminhao.MarcaCaminhao.Id,
+                        Descricao = p.Caminhao.MarcaCaminhao.Descricao
+                    },
+                    ModeloCaminhaoListDto = new ModeloCaminhaoListDto
+                    {
+                        Id = p.Caminhao.ModeloCaminhao.Id,
+                        Descricao = p.Caminhao.ModeloCaminhao.Descricao,
+                        Ano = p.Caminhao.ModeloCaminhao.Ano
+                    }
                 }
             });
         }

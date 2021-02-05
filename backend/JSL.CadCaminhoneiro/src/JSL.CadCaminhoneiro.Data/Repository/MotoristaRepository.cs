@@ -101,9 +101,12 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                     .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<MotoristaListDto> ObterPorIdQueryResponseAsync(Guid id)
+        public async Task<MotoristaListDto> ObterPorIdQueryResponseAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Motorista
+                .AsNoTracking()
+                .MapMotoristaToDto()
+                .SingleAsync(p => p.Id == id);
         }
 
         public async Task<int> ObterTotalRegistrosAsync(string filter)
@@ -117,14 +120,14 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         {
             return await _context.Endereco
                 .AsNoTracking()
-                .SingleAsync(predicate => predicate.MotoristaId == motoristaId);
+                .SingleAsync(p => p.MotoristaId == motoristaId);
         }
 
         public async Task<Habilitacao> ObterHabilitacao(Guid motoristaId)
         {
             return await _context.Habilitacao
                 .AsNoTracking()
-                .SingleAsync(predicate => predicate.MotoristaId == motoristaId);
+                .SingleAsync(p => p.MotoristaId == motoristaId);
         }
 
         public async Task<Caminhao> ObterCaminhao(Guid motoristaId)

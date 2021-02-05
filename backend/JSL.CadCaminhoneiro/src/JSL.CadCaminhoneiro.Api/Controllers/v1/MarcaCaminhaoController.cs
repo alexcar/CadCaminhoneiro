@@ -36,37 +36,17 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             _service = service;
         }
 
-        // GET: api/v1/marca-caminhao
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
-        {
-            var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-
-            var marcaCaminhao = await _repository
-                .ListarTodosQueryResponseAsync(null, null, filter.PageNumber, filter.PageSize);
-
-            var pageData = marcaCaminhao
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                .Take(validFilter.PageSize)
-                .ToList();
-
-            var totalRecords = marcaCaminhao.Count();
-            var pagedResponse =
-                PaginationHelper.CreatePagedReponse<MarcaCaminhaoListDto>(
-                    pageData, validFilter, totalRecords, _uriService,
-                    route);
-
-            return Ok(pagedResponse);
-        }
-
         // GET: api/v1/marca-caminhao/listar-todos
         [HttpGet]
         [Route("listar-todos")]
         [ProducesResponseType(typeof(PagedResponse<IEnumerable<MarcaCaminhaoListDto>>), Status200OK)]
         public async Task<PagedResponse<IEnumerable<MarcaCaminhaoListDto>>> ListarTodos([FromQuery] SortFilterPageRequest sortFilterPageRequest)
         {
-            var route = Request.Path.Value;
+            var route = string.Empty;
+
+            if (Request != null)
+                route = Request.Path.Value;
+
             var validFilter = new PaginationFilter(sortFilterPageRequest.PageNumber, sortFilterPageRequest.PageSize);
             var totalRegistros = await _repository.ObterTotalRegistrosAsync(sortFilterPageRequest.Filter);
 
@@ -85,7 +65,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(MarcaCaminhaoListDto), Status200OK)]
         [ProducesResponseType(typeof(MarcaCaminhaoListDto), Status404NotFound)]
-        public async Task<MarcaCaminhaoListDto> Get(Guid id)
+        public async Task<MarcaCaminhaoListDto> ObterPorId(Guid id)
         {
             var marcaCaminhao = await _repository.ObterPorIdQueryResponseAsync(id);
 
@@ -99,7 +79,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse), Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), Status422UnprocessableEntity)]
-        public async Task<IActionResult> Post([FromBody] MarcaCaminhaoIncluirRequest incluirRequest)
+        public async Task<IActionResult> Incluir([FromBody] MarcaCaminhaoIncluirRequest incluirRequest)
         {
             if (!ModelState.IsValid) { throw new ApiProblemDetailsException(ModelState); }
 
@@ -133,16 +113,9 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
             if (_notificationContext.HasNotifications)
             {
-                // TODO: Retornar vários erros para testar o retorno de erro como uma lista                
                 var notification =
                     _notificationContext.Notifications.Select(p => p.Message).FirstOrDefault();
 
-                //var notification =
-                //    _notificationContext.Notifications.Select(p => p.Message).ToList();
-
-                //return BadRequest(notification);
-                // return BadRequest(new ApiException(notification, Status400BadRequest));
-                // return BadRequest(new ApiProblemDetailsException(notification, Status400BadRequest));
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
@@ -158,7 +131,6 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
             if (marcaCaminhao is null)
             {
-                // return NotFound($"Marca de caminhão com o Id: {id} não existe.");
                 throw new ApiProblemDetailsException($"Marca de caminhão com o Id: {id} não existe.", Status404NotFound);
             }
 

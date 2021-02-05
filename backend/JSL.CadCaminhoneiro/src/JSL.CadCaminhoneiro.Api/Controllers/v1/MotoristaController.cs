@@ -44,7 +44,11 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         {
             try
             {
-                var route = Request.Path.Value;
+                var route = string.Empty;
+
+                if (Request != null)
+                    route = Request.Path.Value;
+                
                 var validFilter = new PaginationFilter(sortFilterPageRequest.PageNumber, sortFilterPageRequest.PageSize);
                 var totalRegistros = await _repository.ObterTotalRegistrosAsync(sortFilterPageRequest.Filter);
 
@@ -70,7 +74,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status200OK)]
         [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status404NotFound)]
-        public async Task<MotoristaListDto> Get(Guid id)
+        public async Task<MotoristaListDto> ObterPorId(Guid id)
         {
             var motorista = await _repository.ObterPorIdQueryResponseAsync(id);
 
@@ -84,7 +88,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse), Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), Status422UnprocessableEntity)]
-        public async Task<IActionResult> Post([FromBody] MotoristaIncluirRequest incluirRequest)
+        public async Task<IActionResult> Incluir([FromBody] MotoristaIncluirRequest incluirRequest)
         {
             if (!ModelState.IsValid) { throw new ApiProblemDetailsException(ModelState); }
 

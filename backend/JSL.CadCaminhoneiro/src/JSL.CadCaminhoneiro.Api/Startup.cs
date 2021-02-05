@@ -1,21 +1,14 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using AutoWrapper;
 using FluentValidation.AspNetCore;
 using JSL.CadCaminhoneiro.Api.Infrastructure.Extension;
 using JSL.CadCaminhoneiro.Api.Infrastructure.Installers.Pagination;
 using JSL.CadCaminhoneiro.Api.Infrastructure.Notifications;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace JSL.CadCaminhoneiro.Api
 {
@@ -32,7 +25,7 @@ namespace JSL.CadCaminhoneiro.Api
         public void ConfigureServices(IServiceCollection services)
         {
             //Register services in Installers folder
-            services.AddServicesInAssembly(Configuration);
+            services.AddServicesInAssembly(Configuration);            
 
             //Register MVC/Web API, NewtonsoftJson and add FluentValidation Support
             services.AddControllers()

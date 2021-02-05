@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace JSL.CadCaminhoneiro.Api.Dto
+namespace JSL.CadCaminhoneiro.Tests.Models
 {
-    public class MotoristaAlterarRequest
+    public class MotoristaTeste
     {
         // motorista
         public Guid Id { get; set; }

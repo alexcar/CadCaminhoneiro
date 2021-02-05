@@ -60,6 +60,8 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public string Placa { get; set; }
         public byte Eixo { get; set; }
         public string Observacao { get; set; }
-        public MotoristaListDto MotoristaListDto { get; set; }
+        public MarcaCaminhaoListDto MarcaCaminhaoListDto { get; set; }
+        public ModeloCaminhaoListDto ModeloCaminhaoListDto { get; set; }
+        // public MotoristaListDto MotoristaListDto { get; set; }
     }
 }

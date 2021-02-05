@@ -37,28 +37,28 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         }
 
         // GET: api/v1/marca-caminhao
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
-        {
-            var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
+        //{
+        //    var route = Request.Path.Value;
+        //    var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
 
-            var modeloCaminhao = await _repository
-                .ListarTodosQueryResponseAsync(null, null, filter.PageNumber, filter.PageSize);
+        //    var modeloCaminhao = await _repository
+        //        .ListarTodosQueryResponseAsync(null, null, filter.PageNumber, filter.PageSize);
 
-            var pageData = modeloCaminhao
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                .Take(validFilter.PageSize)
-                .ToList();
+        //    var pageData = modeloCaminhao
+        //        .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+        //        .Take(validFilter.PageSize)
+        //        .ToList();
 
-            var totalRecords = modeloCaminhao.Count();
-            var pagedResponse =
-                PaginationHelper.CreatePagedReponse<ModeloCaminhaoListDto>(
-                    pageData, validFilter, totalRecords, _uriService,
-                    route);
+        //    var totalRecords = modeloCaminhao.Count();
+        //    var pagedResponse =
+        //        PaginationHelper.CreatePagedReponse<ModeloCaminhaoListDto>(
+        //            pageData, validFilter, totalRecords, _uriService,
+        //            route);
 
-            return Ok(pagedResponse);
-        }
+        //    return Ok(pagedResponse);
+        //}
 
         // GET: api/v1/modelo-caminhao/listar-todos
         [HttpGet]
@@ -66,7 +66,11 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [ProducesResponseType(typeof(PagedResponse<IEnumerable<ModeloCaminhaoListDto>>), Status200OK)]
         public async Task<PagedResponse<IEnumerable<ModeloCaminhaoListDto>>> ListarTodos([FromQuery] SortFilterPageRequest sortFilterPageRequest)
         {
-            var route = Request.Path.Value;
+            var route = string.Empty;
+
+            if (Request != null)
+                route = Request.Path.Value;
+            
             var validFilter = new PaginationFilter(sortFilterPageRequest.PageNumber, sortFilterPageRequest.PageSize);
             var totalRegistros = await _repository.ObterTotalRegistrosAsync(sortFilterPageRequest.Filter);
 
@@ -85,7 +89,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status200OK)]
         [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status404NotFound)]
-        public async Task<ModeloCaminhaoListDto> Get(Guid id)
+        public async Task<ModeloCaminhaoListDto> ObterPorId(Guid id)
         {
             var modeloCaminhao = await _repository.ObterPorIdQueryResponseAsync(id);
 
@@ -99,7 +103,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse), Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), Status422UnprocessableEntity)]
-        public async Task<IActionResult> Post([FromBody] ModeloCaminhaoIncluirRequest incluirRequest)
+        public async Task<IActionResult> Incluir([FromBody] ModeloCaminhaoIncluirRequest incluirRequest)
         {
             if (!ModelState.IsValid) { throw new ApiProblemDetailsException(ModelState); }
 
