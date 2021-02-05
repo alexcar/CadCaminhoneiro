@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using JSL.CadCaminhoneiro.Api.Dto;
 using System.Linq;
-using JSL.CadCaminhoneiro.Tests.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -30,7 +29,6 @@ namespace JSL.CadCaminhoneiro.Tests
         private readonly IMarcaCaminhaoService marcaService;
         private readonly IModeloCaminhaoRepository modeloRepository;
         private readonly IModeloCaminhaoService modeloService;
-        // private MotoristaTeste motoristaTeste;
 
         public MotoristaController_Tests()
         {
@@ -55,41 +53,6 @@ namespace JSL.CadCaminhoneiro.Tests
 
             repository = new MotoristaRepository(cadCaminhoneiroContext);
             service = new MotoristaService(repository, marcaRepository, modeloRepository, notificationContext);
-
-            //motoristaTeste = new MotoristaTeste
-            //{
-            //    Id = Guid.Empty,
-            //    Nome = GerarStringaleatoria(30),
-            //    Cpf = "71914249828",
-            //    DataNascimento = DateTime.Now.AddYears(-30),
-            //    NomePai = GerarStringaleatoria(30),
-            //    NomeMae = GerarStringaleatoria(30),
-            //    Naturalidade = GerarStringaleatoria(10),
-            //    NumeroRegistroGeral = GerarStringaleatoria(10),
-            //    OrgaoExpedicaoRegistroGeral = GerarStringaleatoria(3),
-            //    DataExpedicaoRegistroGeral = DateTime.Now.AddYears(-15),
-            //    EnderecoId = Guid.Empty,
-            //    Logradouro = GerarStringaleatoria(30),
-            //    Numero = "100",
-            //    Complemento = GerarStringaleatoria(10),
-            //    Bairro = GerarStringaleatoria(10),
-            //    Municipio = GerarStringaleatoria(10),
-            //    Uf = GerarStringaleatoria(2),
-            //    Cep = GerarStringaleatoria(8),
-            //    HabilitacaoId = Guid.Empty,
-            //    NumeroRegistroHabilitacao = GerarStringaleatoria(5),
-            //    CategoriaHabilitacao = "E",
-            //    DataPrimeiraHabilitacao = DateTime.Now.AddYears(-10),
-            //    DataValidadeHabilitacao = DateTime.Now.AddYears(10),
-            //    DataEmissaoHabilitacao = DateTime.Now.AddYears(-10),
-            //    ObservacaoHabilitacao = GerarStringaleatoria(10),
-            //    CaminhaoId = Guid.Empty,
-            //    Placa = GerarStringaleatoria(7),
-            //    Eixo = 3,
-            //    CaminhaoObservacao = GerarStringaleatoria(10),
-            //    MarcaCaminhaoId = ObterModeloJaCadastrada().Result.MarcaCaminhaoListDto.Id,
-            //    ModeloCaminhaoId = ObterModeloJaCadastrada().Result.Id
-            //};
         }
 
         /// <summary>
@@ -689,7 +652,7 @@ namespace JSL.CadCaminhoneiro.Tests
 
 
         /// <summary>
-        /// Gera uma marca de forma aleatória
+        /// Gera uma string de forma aleatória
         /// </summary>
         /// <param name="tamanho"></param>
         /// <returns></returns>
@@ -742,6 +705,10 @@ namespace JSL.CadCaminhoneiro.Tests
             return modelo.Data.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Gerar um número de CPF aleatório
+        /// </summary>
+        /// <returns></returns>
         private static string GerarCpf()
         {
             int soma = 0, resto = 0;
