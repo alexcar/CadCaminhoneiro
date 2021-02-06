@@ -16,7 +16,8 @@ namespace JSL.CadCaminhoneiro.Api.Dto
         {
             RuleFor(p => p.Descricao)
                 .NotEmpty()
-                .WithMessage("O campo Descrição é obrigatório").Length(3, 50);
+                .MaximumLength(50)
+                .WithMessage("O campo Descrição é obrigatório");
             
             RuleFor(p => p.Ano)
                 .NotEmpty()

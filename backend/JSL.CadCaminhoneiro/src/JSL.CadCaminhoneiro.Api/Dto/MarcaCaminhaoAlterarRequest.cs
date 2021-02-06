@@ -20,7 +20,7 @@ namespace JSL.CadCaminhoneiro.Api.Dto
 
             RuleFor(p => p.Descricao)
                 .NotEmpty()
-                .Length(3, 50)
+                .MaximumLength(50)
                 .WithMessage("O campo Descrição é obrigatório");
         }
     }

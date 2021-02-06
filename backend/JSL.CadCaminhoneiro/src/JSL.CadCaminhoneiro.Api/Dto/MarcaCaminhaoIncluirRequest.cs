@@ -12,8 +12,9 @@ namespace JSL.CadCaminhoneiro.Api.Dto
         public MarcaCaminhaoIncluirRequestValidator()
         {
             RuleFor(p => p.Descricao)
-                .NotEmpty()                                
-                .WithMessage("O campo Descrição é obrigatório").Length(3, 50);
+                .NotEmpty()
+                .MaximumLength(50)
+                .WithMessage("O campo Descrição é obrigatório");
         }
     }
 }

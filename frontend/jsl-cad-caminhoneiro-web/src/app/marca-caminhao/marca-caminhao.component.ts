@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MarcaCaminhaoResult } from './marcaCaminhaoResult';
-import { MarcasCaminhao } from './marcasCaminhao';
+import { MarcaCaminhao } from './marcaCaminhao';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -19,7 +19,7 @@ export class MarcaCaminhaoComponent implements OnInit {
   // public marcasCaminhao: MarcasCaminhao[] = []
 
   // public marcasCaminhao: MatTableDataSource<MarcasCaminhao>;
-  public marcasCaminhao!: MatTableDataSource<MarcasCaminhao>;
+  public marcasCaminhao!: MatTableDataSource<MarcaCaminhao>;
 
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -39,7 +39,7 @@ export class MarcaCaminhaoComponent implements OnInit {
           console.log(this.marcasCaminhaoResult.message);
         } else {
           // this.marcasCaminhao = this.marcasCaminhaoResult.result.data;
-          this.marcasCaminhao = new MatTableDataSource<MarcasCaminhao>(this.marcasCaminhaoResult.result.data);
+          this.marcasCaminhao = new MatTableDataSource<MarcaCaminhao>(this.marcasCaminhaoResult.result.data);
           this.marcasCaminhao.paginator = this.paginator;
         }
       }, error => console.error(error));

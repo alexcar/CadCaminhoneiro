@@ -1,4 +1,4 @@
-export interface MarcasCaminhao {
+export interface MarcaCaminhao {
   id: string;
   descricao: string;
 }

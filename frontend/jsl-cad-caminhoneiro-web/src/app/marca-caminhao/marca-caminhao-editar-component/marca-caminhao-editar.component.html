@@ -1,0 +1,35 @@
+<div class="city-edit">
+  <h1>{{titulo}}</h1>
+
+  <p *ngIf="this.id && !marcaCaminhao"><em>Carregando...</em></p>
+
+  <div class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+          <label for="name">Nome:</label>
+          <br />
+          <input type="text" id="descricao"
+                 formControlName="descricao" required
+                 placeholder="Nome da marca"
+                 class="form-control" />
+      </div>
+
+      <div class="form-group commands">
+          <button *ngIf="id" type="submit"
+                  (click)="onSubmit()"
+                  class="btn btn-success">
+              Enviar
+          </button>
+          <button *ngIf="!id" type="submit"
+                  (click)="onSubmit()"
+                  class="btn btn-success">
+              Enviar
+          </button>
+          <button type="submit"
+                  [routerLink]="['/marcasCaminhao']"
+                  class="btn">
+              Cancelar
+          </button>
+      </div>
+  </div>
+</div>

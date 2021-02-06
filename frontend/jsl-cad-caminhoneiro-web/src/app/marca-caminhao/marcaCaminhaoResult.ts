@@ -1,4 +1,4 @@
-import { MarcasCaminhao } from './marcasCaminhao';
+import { MarcaCaminhao } from './marcaCaminhao';
 
 export interface MarcaCaminhaoResult {
   isError: boolean;
@@ -13,6 +13,6 @@ export interface MarcaCaminhaoResult {
     totalPages: number;
     totalRecords: number;
     nextPage: string;
-    data: MarcasCaminhao[]
+    data: MarcaCaminhao[]
   }
 }
