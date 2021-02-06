@@ -1,0 +1,22 @@
+<h1>Marcas de Caminhão</h1>
+
+<p>Lista das Marcas de caminhão cadastradas.</p>
+
+<p *ngIf="!marcasCaminhao"><em>Loading...</em></p>
+
+<table mat-table [dataSource]="marcasCaminhao" class="mat-elevation-z8"
+ [hidden]="!marcasCaminhao">
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let marca">{{marca.descricao}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!marcasCaminhao"
+    [pageSize]="3"
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons></mat-paginator>
