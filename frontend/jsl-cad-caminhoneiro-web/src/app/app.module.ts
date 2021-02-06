@@ -8,10 +8,12 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MarcaCaminhaoComponent } from './marca-caminhao/marca-caminhao.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
+import { MarcaCaminhaoComponent } from './marca-caminhao/marca-caminhao.component';
 import { MarcaCaminhaoEditarComponent } from './marca-caminhao/marca-caminhao-editar-component/marca-caminhao-editar.component';
+import { ModeloCaminhaoComponent } from './modelo-caminhao/modelo-caminhao.component';
+import { ModeloCaminhaoEditarComponent } from './modelo-caminhao/modelo-caminhao-editar/modelo-caminhao-editar.component';
 
 export function getBaseUrl() {
   return 'https://localhost:44313/api/';
@@ -23,8 +25,10 @@ export function getBaseUrl() {
     MarcaCaminhaoComponent,
     NavMenuComponent,
     HomeComponent,
-    MarcaCaminhaoEditarComponent
-  ],
+    MarcaCaminhaoEditarComponent,
+    ModeloCaminhaoComponent,
+    ModeloCaminhaoEditarComponent
+   ],
   imports: [
     BrowserModule,
     HttpClientModule,
