@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { MarcaCaminhaoResult } from './marcaCaminhaoResult';
 import { MarcaCaminhao } from './marcaCaminhao';
@@ -14,7 +15,8 @@ import { MatPaginator } from '@angular/material/paginator';
 export class MarcaCaminhaoComponent implements OnInit {
 
   public marcasCaminhaoResult: any;
-  public displayedColumns: string[] = ['nome'];
+  public displayedColumns: string[] = ['nome', 'Acao'];
+  excluindoMarca!: boolean;
 
   // public marcasCaminhao: MarcasCaminhao[] = []
 
@@ -26,22 +28,39 @@ export class MarcaCaminhaoComponent implements OnInit {
 
     constructor(
       private http: HttpClient,
+      private router: Router,
       @Inject('BASE_URL') private baseUrl: string)
       { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
 
+  loadData() {
     this.http.get<MarcaCaminhaoResult>(this.baseUrl + 'v1/marca-caminhao/listar-todos')
-      .subscribe(result => {
-        this.marcasCaminhaoResult = result;
+    .subscribe(result => {
+      this.marcasCaminhaoResult = result;
 
-        if (this.marcasCaminhaoResult.isError) {
-          console.log(this.marcasCaminhaoResult.message);
-        } else {
-          // this.marcasCaminhao = this.marcasCaminhaoResult.result.data;
-          this.marcasCaminhao = new MatTableDataSource<MarcaCaminhao>(this.marcasCaminhaoResult.result.data);
-          this.marcasCaminhao.paginator = this.paginator;
-        }
-      }, error => console.error(error));
+      if (this.marcasCaminhaoResult.isError) {
+        console.log(this.marcasCaminhaoResult.message);
+      } else {
+            this.marcasCaminhao = new MatTableDataSource<MarcaCaminhao>(this.marcasCaminhaoResult.result.data);
+        this.marcasCaminhao.paginator = this.paginator;
+      }
+    }, error => console.error(error));
+  }
+
+  excluir(id: string) {
+    this.excluindoMarca = true;
+
+    this.http.delete(this.baseUrl + 'v1/marca-caminhao/' + id)
+      .subscribe(result => {
+        this.excluindoMarca = false;
+        this.loadData();
+      }, error => {
+        this.excluindoMarca = false;
+        console.error(error)
+
+      });
   }
 }

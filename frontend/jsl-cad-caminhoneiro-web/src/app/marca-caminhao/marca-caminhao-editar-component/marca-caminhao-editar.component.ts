@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MarcaCaminhao } from '../marcaCaminhao';
 
@@ -26,11 +26,13 @@ export class MarcaCaminhaoEditarComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      descricao: new FormControl('')
+      descricao: new FormControl('', Validators.required)
     });
 
     this.loadData();
   }
+
+  get descricao() { return this.form.get('descricao'); }
 
   loadData() {
     // recupera o ID do parâmetro 'id'
