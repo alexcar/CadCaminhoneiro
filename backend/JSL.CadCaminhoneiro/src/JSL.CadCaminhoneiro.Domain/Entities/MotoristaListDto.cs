@@ -37,7 +37,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public string Municipio { get; set; }
         public string Uf { get; set; }
         public string Cep { get; set; }
-        public MotoristaListDto MotoristaListDto { get; set; }
+        // public MotoristaListDto MotoristaListDto { get; set; }
     }
 
     public class HabilitacaoDto
@@ -50,7 +50,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public DateTime DataValidade { get; set; }
         public DateTime DataEmissao { get; set; }
         public string Observacao { get; set; }
-        public MotoristaListDto MotoristaListDto { get; set; }
+        // public MotoristaListDto MotoristaListDto { get; set; }
     }
 
     public class CaminhaoDto

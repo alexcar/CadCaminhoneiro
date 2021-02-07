@@ -68,7 +68,9 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
 
         // atualiza o form com as informações do modelo
         this.form.patchValue(this.modeloCaminhao);
-      }, error => console.error(error));
+      }, error => {
+        this.toastr.error(error.error.title, 'Modelos de Caminhão');
+      });
 
     } else {
       // inserir
@@ -87,7 +89,6 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
           this.marcasCaminhao = this.marcasCaminhaoResult.result.data;
         }
       }, error => console.error(error));
-
   }
 
   onSubmit() {

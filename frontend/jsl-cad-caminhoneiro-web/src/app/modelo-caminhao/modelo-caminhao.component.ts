@@ -38,7 +38,7 @@ export class ModeloCaminhaoComponent implements OnInit {
       this.modelosCaminhaoResultSemPaginacao = result;
 
       if (this.modelosCaminhaoResultSemPaginacao.isError) {
-        console.log(this.modelosCaminhaoResultSemPaginacao.message);
+        this.toastr.error(this.modelosCaminhaoResultSemPaginacao.message, 'Modelos de Caminhão');
       } else {
         this.modelosCaminhao = new MatTableDataSource<ModeloCaminhao>(this.modelosCaminhaoResultSemPaginacao.result);
         this.modelosCaminhao.paginator = this.paginator;

@@ -1,3 +1,5 @@
+import { MotoristaEditarComponent } from './motorista/motorista-editar/motorista-editar.component';
+import { MotoristaComponent } from './motorista/motorista.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -15,6 +17,9 @@ const routes: Routes = [
   { path: 'modelosCaminhao', component: ModeloCaminhaoComponent },
   { path: 'modeloCaminhao/:id', component: ModeloCaminhaoEditarComponent },
   { path: 'modeloCaminhao', component: ModeloCaminhaoEditarComponent },
+  { path: 'motoristas', component: MotoristaComponent },
+  { path: 'motorista/:id', component: MotoristaEditarComponent },
+  { path: 'motorista', component: MotoristaEditarComponent },
 ];
 
 @NgModule({

@@ -17,6 +17,8 @@ import { MarcaCaminhaoComponent } from './marca-caminhao/marca-caminhao.componen
 import { MarcaCaminhaoEditarComponent } from './marca-caminhao/marca-caminhao-editar-component/marca-caminhao-editar.component';
 import { ModeloCaminhaoComponent } from './modelo-caminhao/modelo-caminhao.component';
 import { ModeloCaminhaoEditarComponent } from './modelo-caminhao/modelo-caminhao-editar/modelo-caminhao-editar.component';
+import { MotoristaComponent } from './motorista/motorista.component';
+import { MotoristaEditarComponent } from './motorista/motorista-editar/motorista-editar.component';
 
 export function getBaseUrl() {
   return 'https://localhost:44313/api/';
@@ -30,7 +32,9 @@ export function getBaseUrl() {
     HomeComponent,
     MarcaCaminhaoEditarComponent,
     ModeloCaminhaoComponent,
-    ModeloCaminhaoEditarComponent
+    ModeloCaminhaoEditarComponent,
+    MotoristaComponent,
+    MotoristaEditarComponent
    ],
   imports: [
     CommonModule,

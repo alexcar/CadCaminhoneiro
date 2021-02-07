@@ -41,7 +41,7 @@ export class MarcaCaminhaoComponent implements OnInit {
       this.marcasCaminhaoResultSemPaginacao = result;
 
       if (this.marcasCaminhaoResultSemPaginacao.isError) {
-        console.log(this.marcasCaminhaoResultSemPaginacao.message);
+        this.toastr.error(this.marcasCaminhaoResultSemPaginacao.message, 'Marcas de Caminhão');
       } else {
             this.marcasCaminhao = new MatTableDataSource<MarcaCaminhao>(this.marcasCaminhaoResultSemPaginacao.result);
         this.marcasCaminhao.paginator = this.paginator;
