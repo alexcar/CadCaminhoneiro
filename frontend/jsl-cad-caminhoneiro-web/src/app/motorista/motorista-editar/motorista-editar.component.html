@@ -1,1 +1,86 @@
-<p>motorista-editar works!</p>
+<div class="city-edit">
+  <h1>{{titulo}}</h1>
+
+  <p *ngIf="this.id && !motorista"><em>Carregando...</em></p>
+
+  <div class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="marcaCaminhaoId">Marca:</label>
+      <br />
+      <mat-form-field *ngIf="marcasCaminhao">
+        <mat-label>--- Selecione ---</mat-label>
+        <mat-select [(value)]="selected" id="marcaCaminhaoId" formControlName="marcaCaminhaoId">
+          <mat-option *ngFor="let marca of marcasCaminhao"
+            [value]="marca.id">
+              {{ marca.descricao }}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="marcaCaminhaoId?.invalid &&
+                 (marcaCaminhaoId?.dirty ||
+                   marcaCaminhaoId?.touched)"
+                 class="invalid-feedback">
+                <div *ngIf="marcaCaminhaoId?.errors?.required">
+                  Please select a Country.
+                </div>
+            </div>
+    </div>
+
+    <div class="form-group">
+          <label for="descricao">Nome:</label>
+          <br />
+          <input type="text" id="descricao"
+                 formControlName="descricao" required
+                 placeholder="Nome do modelo"
+                 class="form-control" />
+
+          <div *ngIf="descricao?.invalid &&
+                 (descricao?.dirty || descricao?.touched)"
+                  class="invalid-feedback">
+              <div *ngIf="descricao?.errors?.required">
+                  A descrição é obrigatório
+              </div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ano">Ano:</label>
+        <br />
+        <input type="text" id="ano"
+               formControlName="ano" required
+               placeholder="Ano de fabricação"
+               class="form-control" />
+
+        <div *ngIf="descricao?.invalid &&
+            (ano?.dirty || ano?.touched)"
+             class="invalid-feedback">
+          <div *ngIf="ano?.errors?.required">
+             O ano é obrigatório
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group commands">
+          <button *ngIf="id" type="submit"
+                  (click)="onSubmit()"
+                  [disabled]="form.invalid"
+                  class="btn btn-success">
+              Enviar
+          </button>
+          <button *ngIf="!id" type="submit"
+                  (click)="onSubmit()"
+                  [disabled]="form.invalid"
+                  class="btn btn-success">
+              Enviar
+          </button>
+          <button type="submit"
+                  [routerLink]="['/modelosCaminhao']"
+                  class="btn">
+              Cancelar
+          </button>
+      </div>
+  </div>
+</div>
+
