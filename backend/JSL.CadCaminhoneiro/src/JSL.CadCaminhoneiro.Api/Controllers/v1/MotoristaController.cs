@@ -70,6 +70,17 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             }            
         }
 
+        // GET: api/v1/motorista/listar-todos-sem-paginacao
+        [HttpGet]
+        [Route("listar-todos-sem-paginacao")]
+        [ProducesResponseType(typeof(IEnumerable<MotoristaListDto>), Status200OK)]
+        public async Task<IEnumerable<MotoristaListDto>> ListarTodosSemPaginacao()
+        {
+            var motoristas = await _repository.ListarTodosSemPaginacaoAsync();
+
+            return motoristas;
+        }
+
         // GET: api/v1/motorista/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status200OK)]
@@ -102,7 +113,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
-            return Ok(motoristaId.ToString());
+            return Ok($"O motorista com o CPF: {incluirRequest.Cpf} foi inseriro com sucesso.");
         }
 
         // PUT: api/v1/motorista/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
@@ -128,7 +139,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
-            return Ok($"Registro com o Id: {id} alterado com sucesso");
+            return Ok($"O motorista com o CPF: {alterarRequest.Cpf} foi alterado com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -145,7 +156,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
             await _service.ExcluirAsync(motorista);
 
-            return Ok($"Registro com o Id: {id} excluído com sucesso");
+            return Ok($"O motorista com o CPF: {motorista.Cpf} foi excluído com sucesso.");
         }
     }
 }

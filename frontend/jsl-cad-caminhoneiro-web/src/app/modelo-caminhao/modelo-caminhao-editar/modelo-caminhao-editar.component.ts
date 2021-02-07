@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModeloCaminhao } from '../modeloCaminhao';
 import { MarcaCaminhao } from './../../marca-caminhao/marcaCaminhao';
 import { MarcaCaminhaoResult } from './../../marca-caminhao/marcaCaminhaoResult';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modelo-caminhao-editar',
@@ -14,20 +15,23 @@ import { MarcaCaminhaoResult } from './../../marca-caminhao/marcaCaminhaoResult'
 })
 export class ModeloCaminhaoEditarComponent implements OnInit {
 
-  titulo!: string;
-  form!: FormGroup;
-  modeloCaminhao!: ModeloCaminhao;
-  modeloCaminhaoResult: any;
-  id?: string;
-  selected!: string;
+  public titulo!: string;
+  public form!: FormGroup;
+  public modeloCaminhao!: ModeloCaminhao;
+  public modeloCaminhaoResult: any;
+  public id?: string;
+  public selected!: string;
+  public modeloCaminhaoResultEditar: any;
+  public modeloCaminhaoResultInserir: any;
 
-  marcasCaminhaoResult: any;
-  marcasCaminhao!: MarcaCaminhao[];
+  public marcasCaminhaoResult: any;
+  public marcasCaminhao!: MarcaCaminhao[];
 
   constructor(private ActivatedRoute: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string) { }
+    @Inject('BASE_URL') private baseUrl: string,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -41,7 +45,7 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
 
   get descricao() { return this.form.get('descricao'); }
   get ano() { return this.form.get('ano'); }
-  // get marcaCaminhaoId() { return this.form.get('marcaCaminhaoId'); }
+  get marcaCaminhaoId() { return this.form.get('modeloCaminhao.marcaCaminhaoListDto.id'); }
 
   loadData() {
     // Carrega as marcas
@@ -55,10 +59,10 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
       // Obtem o modelo do servidor
       var url = this.baseUrl + 'v1/modelo-caminhao/' + this.id;
 
-
       this.http.get<ModeloCaminhao>(url).subscribe(result => {
         this.modeloCaminhaoResult = result;
         this.modeloCaminhao = this.modeloCaminhaoResult.result;
+        this.modeloCaminhao.marcaCaminhaoId = this.modeloCaminhao.marcaCaminhaoListDto.id;
         this.titulo = "Edição - " + this.modeloCaminhao.descricao;
         this.selected = this.modeloCaminhao.marcaCaminhaoListDto.id;
 
@@ -100,11 +104,14 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
       this.http
         .put<ModeloCaminhao>(url, modeloCaminhao)
           .subscribe(result => {
-            console.log("Modelo Caminhão" + modeloCaminhao.id + " atualizado com sucesso");
+            this.modeloCaminhaoResultEditar = result;
+            this.toastr.success(this.modeloCaminhaoResultEditar.result, 'Modelos de Caminhão');
 
             // volta para a listagem
             this.router.navigate(['/modelosCaminhao']);
-          }, error => console.error(error));
+          }, error => {
+            this.toastr.error(error.error.title, 'Modelos de Caminhão');
+          });
     } else {
       // inserir
 
@@ -112,11 +119,14 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
       this.http
         .post<ModeloCaminhao>(url, modeloCaminhao)
         .subscribe(result => {
-          console.log("Modelo " + result.id + "cadastrada com sucesso");
+          this.modeloCaminhaoResultInserir = result;
+          this.toastr.success(this.modeloCaminhaoResultInserir.result, 'Modelos de Caminhão');
 
           // voltar para a listagem
           this.router.navigate(['/modelosCaminhao']);
-        }, error => console.log(error));
+        }, error => {
+          this.toastr.error(error.error.title, 'Modelos de Caminhão');
+        });
     }
   }
 }

@@ -2,10 +2,11 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { MarcaCaminhaoResult } from './marcaCaminhaoResult';
+import { MarcaCaminhaoResultSemPaginacao } from './marcaCaminhaoResultSemPaginacao';
 import { MarcaCaminhao } from './marcaCaminhao';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-marca-caminhao',
@@ -14,13 +15,10 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class MarcaCaminhaoComponent implements OnInit {
 
-  public marcasCaminhaoResult: any;
+  public marcasCaminhaoResultSemPaginacao: any;
+  public marcaCaminhaoResult: any;
   public displayedColumns: string[] = ['nome', 'Acao'];
-  excluindoMarca!: boolean;
-
-  // public marcasCaminhao: MarcasCaminhao[] = []
-
-  // public marcasCaminhao: MatTableDataSource<MarcasCaminhao>;
+  public excluindoMarca!: boolean;
   public marcasCaminhao!: MatTableDataSource<MarcaCaminhao>;
 
   // @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,7 +27,8 @@ export class MarcaCaminhaoComponent implements OnInit {
     constructor(
       private http: HttpClient,
       private router: Router,
-      @Inject('BASE_URL') private baseUrl: string)
+      @Inject('BASE_URL') private baseUrl: string,
+      private toastr: ToastrService)
       { }
 
   ngOnInit(): void {
@@ -37,14 +36,14 @@ export class MarcaCaminhaoComponent implements OnInit {
   }
 
   loadData() {
-    this.http.get<MarcaCaminhaoResult>(this.baseUrl + 'v1/marca-caminhao/listar-todos')
+    this.http.get<MarcaCaminhaoResultSemPaginacao>(this.baseUrl + 'v1/marca-caminhao/listar-todos-sem-paginacao')
     .subscribe(result => {
-      this.marcasCaminhaoResult = result;
+      this.marcasCaminhaoResultSemPaginacao = result;
 
-      if (this.marcasCaminhaoResult.isError) {
-        console.log(this.marcasCaminhaoResult.message);
+      if (this.marcasCaminhaoResultSemPaginacao.isError) {
+        console.log(this.marcasCaminhaoResultSemPaginacao.message);
       } else {
-            this.marcasCaminhao = new MatTableDataSource<MarcaCaminhao>(this.marcasCaminhaoResult.result.data);
+            this.marcasCaminhao = new MatTableDataSource<MarcaCaminhao>(this.marcasCaminhaoResultSemPaginacao.result);
         this.marcasCaminhao.paginator = this.paginator;
       }
     }, error => console.error(error));
@@ -56,11 +55,12 @@ export class MarcaCaminhaoComponent implements OnInit {
     this.http.delete(this.baseUrl + 'v1/marca-caminhao/' + id)
       .subscribe(result => {
         this.excluindoMarca = false;
+        this.marcaCaminhaoResult = result;
+        this.toastr.success(this.marcaCaminhaoResult.result, 'Marcas de Caminhão');
         this.loadData();
       }, error => {
         this.excluindoMarca = false;
-        console.error(error)
-
+        this.toastr.error(error.error.title, 'Marcas de Caminhão');
       });
   }
 }

@@ -10,11 +10,13 @@ namespace JSL.CadCaminhoneiro.Domain.Interfaces
     {
         Task<ModeloCaminhaoListDto> ObterPorIdQueryResponseAsync(Guid id);
         Task<IEnumerable<ModeloCaminhaoListDto>> ListarTodosQueryResponseAsync(string sort, string filter, int pageNumber, int pageSize);
+        Task<IEnumerable<ModeloCaminhaoListDto>> ListarTodosSemPaginacaoAsync();
         Task<bool> ExisteAsync(Guid id);
         Task<ModeloCaminhao> ObterOriginalAsync(Guid id);
         Task<ModeloCaminhao> ObterPorDescricaoAsync(string descricao);
         Task<ModeloCaminhao> ObterPorDescricaoAnoAsync(string descricao, string ano);
         Task<int> ObterTotalRegistrosAsync(string filter);
         Task<bool> ExistePorDescricaoAsync(string descricao);
+        Task<bool> ContemCaminhao(Guid id);
     }
 }

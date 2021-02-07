@@ -34,31 +34,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             _notificationContext = notificationContext;
             _repository = repository;
             _service = service;
-        }
-
-        // GET: api/v1/marca-caminhao
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
-        //{
-        //    var route = Request.Path.Value;
-        //    var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-
-        //    var modeloCaminhao = await _repository
-        //        .ListarTodosQueryResponseAsync(null, null, filter.PageNumber, filter.PageSize);
-
-        //    var pageData = modeloCaminhao
-        //        .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-        //        .Take(validFilter.PageSize)
-        //        .ToList();
-
-        //    var totalRecords = modeloCaminhao.Count();
-        //    var pagedResponse =
-        //        PaginationHelper.CreatePagedReponse<ModeloCaminhaoListDto>(
-        //            pageData, validFilter, totalRecords, _uriService,
-        //            route);
-
-        //    return Ok(pagedResponse);
-        //}
+        }        
 
         // GET: api/v1/modelo-caminhao/listar-todos
         [HttpGet]
@@ -83,6 +59,17 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                     modelosCaminhao, validFilter, totalRegistros, _uriService, route);
 
             return pagedResponse;
+        }
+
+        // GET: api/v1/modelo-caminhao/listar-todos-sem-paginacao
+        [HttpGet]
+        [Route("listar-todos-sem-paginacao")]
+        [ProducesResponseType(typeof(IEnumerable<ModeloCaminhaoListDto>), Status200OK)]
+        public async Task<IEnumerable<ModeloCaminhaoListDto>> ListarTodosSemPaginacao()
+        {
+            var modelosCaminhao = await _repository.ListarTodosSemPaginacaoAsync();
+
+            return modelosCaminhao;
         }
 
         // GET: api/v1/modelo-caminhao/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
@@ -117,7 +104,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
-            return Ok(modeloCaminhaoId.ToString());
+            return Ok($"O modelo de caminhão: {incluirRequest.Descricao} foi inserido com sucesso.");
         }
 
         // PUT: api/v1/modelo-caminhao/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
@@ -143,7 +130,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
-            return Ok($"Registro com o Id: {id} alterado com sucesso");
+            return Ok($"O modelo de caminhão: {alterarRequest.Descricao} foi alterado com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -160,7 +147,15 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
             await _service.ExcluirAsync(modeloCaminhao);
 
-            return Ok($"Registro com o Id: {id} excluído com sucesso");
+            if (_notificationContext.HasNotifications)
+            {
+                var notification =
+                    _notificationContext.Notifications.Select(p => p.Message).FirstOrDefault();
+
+                throw new ApiProblemDetailsException(notification, Status400BadRequest);
+            }
+
+            return Ok($"O modelo de caminhão: {modeloCaminhao.Descricao} foi excluído com sucesso.");
         }
     }
 }

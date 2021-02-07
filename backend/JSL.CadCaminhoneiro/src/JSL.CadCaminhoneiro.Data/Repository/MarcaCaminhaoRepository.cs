@@ -58,6 +58,15 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<MarcaCaminhaoListDto>> ListarTodosSemPaginacaoAsync()
+        {
+            return await _context.MarcaCaminhao
+                .AsNoTracking()
+                .MapMarcaCaminhaoToDto()
+                .ApplySort("descricao")
+                .ToListAsync();
+        }
+
         public async Task<MarcaCaminhao> ObterOriginalAsync(Guid id)
         {
             return await _context.MarcaCaminhao
@@ -112,9 +121,17 @@ namespace JSL.CadCaminhoneiro.Data.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> ContemModeloCaminhao(Guid id)
+        {
+            var contemModeloCaminhao = await _context.ModeloCaminhao
+                .FirstOrDefaultAsync(p => p.MarcaCaminhaoId == id);
+
+            return contemModeloCaminhao != null;
+        }
+
         public void Dispose()
         {
             _context?.Dispose();
-        }
+        }       
     }
 }

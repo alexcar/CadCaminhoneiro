@@ -1,7 +1,5 @@
 <h1>Modelos de Caminhão</h1>
 
-<p>Lista dos Modelos de caminhão cadastrados.</p>
-
 <p *ngIf="!modelosCaminhao"><em>Carregando...</em></p>
 
 <div class="commands text-right" *ngIf="modelosCaminhao">
@@ -31,7 +29,16 @@
   <ng-container matColumnDef="marca">
     <th mat-header-cell *matHeaderCellDef>Marca</th>
     <td mat-cell *matCellDef="let modelo">
-      {{modelo.marca}}
+      {{modelo.marcaCaminhaoListDto.descricao}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Acao">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let modelo" style="text-align: right;">
+      <button mat-button color="primary" (click)="excluir(modelo.id)" [disabled]="excluindoModelo" >
+        Excluir
+      </button>
     </td>
   </ng-container>
 
@@ -41,6 +48,6 @@
 
 <!-- Pagination directive -->
 <mat-paginator [hidden]="!modelosCaminhao"
-    [pageSize]="3"
+    [pageSize]="10"
     [pageSizeOptions]="[10, 20, 50]"
     showFirstLastButtons></mat-paginator>

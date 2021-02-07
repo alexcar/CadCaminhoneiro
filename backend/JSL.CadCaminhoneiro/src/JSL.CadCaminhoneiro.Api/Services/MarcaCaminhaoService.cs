@@ -62,6 +62,16 @@ namespace JSL.CadCaminhoneiro.Api.Services
 
         public async Task ExcluirAsync(MarcaCaminhao entity)
         {
+            // Não é permitido excluir uma marca se estiver associada a um modelo
+            var contemModeloCaminhao = await _repository.ContemModeloCaminhao(entity.Id);
+            
+            if (contemModeloCaminhao)
+            {
+                _notificationContext.AddNotification(new Notification("Descricao",
+                            $"Não foi possível excluir a marca: { entity.Descricao } porque ela está associada a um modelo de caminhão "));
+                return;
+            }                
+
             await _repository.ExcluirAsync(entity);
         }
 

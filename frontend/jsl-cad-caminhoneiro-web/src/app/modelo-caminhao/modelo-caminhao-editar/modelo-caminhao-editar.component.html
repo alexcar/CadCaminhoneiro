@@ -18,11 +18,11 @@
         </mat-select>
       </mat-form-field>
 
-      <div *ngIf="form.controls['marcaCaminhaoId'].invalid &&
-                 (form.controls['marcaCaminhaoId'].dirty ||
-                   form.controls['marcaCaminhaoId'].touched)"
+      <div *ngIf="marcaCaminhaoId?.invalid &&
+                 (marcaCaminhaoId?.dirty ||
+                   marcaCaminhaoId?.touched)"
                  class="invalid-feedback">
-                <div *ngIf="form.controls['marcaCaminhaoId'].errors?.required">
+                <div *ngIf="marcaCaminhaoId?.errors?.required">
                   Please select a Country.
                 </div>
             </div>

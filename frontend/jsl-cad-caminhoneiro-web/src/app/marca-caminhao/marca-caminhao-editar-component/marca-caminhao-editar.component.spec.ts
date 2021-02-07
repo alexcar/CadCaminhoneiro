@@ -5,6 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { MarcaCaminhaoEditarComponent } from './marca-caminhao-editar.component';
 
+
 describe('MarcaCaminhaoEditarComponentComponent', () => {
   let component: MarcaCaminhaoEditarComponent;
   let fixture: ComponentFixture<MarcaCaminhaoEditarComponent>;

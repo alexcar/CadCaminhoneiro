@@ -33,6 +33,15 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<ModeloCaminhaoListDto>> ListarTodosSemPaginacaoAsync()
+        {
+            return await _context.ModeloCaminhao
+                .AsNoTracking()
+                .MapModeloCaminhaoToDto()
+                .ApplySort("descricao")
+                .ToListAsync();
+        }
+
         public async Task<ModeloCaminhao> ObterOriginalAsync(Guid id)
         {
             return await _context.ModeloCaminhao
@@ -121,7 +130,15 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         {
             _context.ModeloCaminhao.Remove(entity);
             await _context.SaveChangesAsync();
-        }                
+        }
+
+        public async Task<bool> ContemCaminhao(Guid id)
+        {
+            var contemCaminhao = await _context.Caminhao
+                .FirstOrDefaultAsync(p => p.ModeloCaminhaoId == id);
+
+            return contemCaminhao != null;
+        }
 
         public void Dispose()
         {

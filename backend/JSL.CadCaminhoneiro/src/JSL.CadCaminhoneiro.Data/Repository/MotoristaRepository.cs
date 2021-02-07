@@ -33,6 +33,15 @@ namespace JSL.CadCaminhoneiro.Data.Repository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<MotoristaListDto>> ListarTodosSemPaginacaoAsync()
+        {
+            return await _context.Motorista
+                .AsNoTracking()
+                .MapMotoristaToDto()
+                .ApplySort("nome")
+                .ToListAsync();
+        }
+
         public async Task<bool> ExisteAsync(Guid id)
         {
             return await _context.Motorista
@@ -161,6 +170,6 @@ namespace JSL.CadCaminhoneiro.Data.Repository
         public void Dispose()
         {
             _context?.Dispose();
-        }
+        }        
     }
 }

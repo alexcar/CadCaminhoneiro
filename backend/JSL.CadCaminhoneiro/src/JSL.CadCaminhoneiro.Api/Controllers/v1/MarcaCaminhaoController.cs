@@ -61,6 +61,17 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             return pagedResponse;
         }
 
+        // GET: api/v1/marca-caminhao/listar-todos-sem-paginacao
+        [HttpGet]
+        [Route("listar-todos-sem-paginacao")]
+        [ProducesResponseType(typeof(IEnumerable<MarcaCaminhaoListDto>), Status200OK)]
+        public async Task<IEnumerable<MarcaCaminhaoListDto>> ListarTodosSemPaginacao()
+        {
+            var marcasCaminhao = await _repository.ListarTodosSemPaginacaoAsync();
+
+            return marcasCaminhao;
+        }
+
         // GET: api/v1/marca-caminhao/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(MarcaCaminhaoListDto), Status200OK)]
@@ -93,7 +104,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
-            return Ok(marcaCaminhaoId.ToString());
+            return Ok($"A marca de caminhão: {incluirRequest.Descricao} foi inserida com sucesso.");
         }
 
         // PUT: api/v1/marca-caminhao/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
@@ -119,7 +130,7 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
                 throw new ApiProblemDetailsException(notification, Status400BadRequest);
             }
 
-            return Ok($"Registro com o Id: {id} alterado com sucesso");
+            return Ok($"A marca de caminhão: {alterarRequest.Descricao} foi alterada com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -136,7 +147,15 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
             await _service.ExcluirAsync(marcaCaminhao);
 
-            return Ok($"Registro com o Id: {id} excluído com sucesso");
+            if (_notificationContext.HasNotifications)
+            {
+                var notification =
+                    _notificationContext.Notifications.Select(p => p.Message).FirstOrDefault();
+
+                throw new ApiProblemDetailsException(notification, Status400BadRequest);
+            }
+
+            return Ok($"A marca de caminhão: {marcaCaminhao.Descricao} foi excluída com sucesso.");
         }
     }
 }

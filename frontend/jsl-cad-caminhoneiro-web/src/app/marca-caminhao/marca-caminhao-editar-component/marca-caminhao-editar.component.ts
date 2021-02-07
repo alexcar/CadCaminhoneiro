@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { ToastrService } from 'ngx-toastr';
 import { MarcaCaminhao } from '../marcaCaminhao';
 
 @Component({
@@ -12,17 +12,20 @@ import { MarcaCaminhao } from '../marcaCaminhao';
 })
 export class MarcaCaminhaoEditarComponent implements OnInit {
 
-  titulo!: string;
-  form!: FormGroup;
-  marcaCaminhao!: MarcaCaminhao;
-  marcaCaminhaoResult: any;
-  id?: string;
+  public titulo!: string;
+  public form!: FormGroup;
+  public marcaCaminhao!: MarcaCaminhao;
+  public marcaCaminhaoResult: any;
+  public id?: string;
+  public marcaCaminhaoResultEditar: any;
+  public marcaCaminhaoResultInserir: any;
 
   constructor(
     private ActivatedRoute: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string) { }
+    @Inject('BASE_URL') private baseUrl: string,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -74,11 +77,14 @@ export class MarcaCaminhaoEditarComponent implements OnInit {
       this.http
         .put<MarcaCaminhao>(url, marcaCaminhao)
           .subscribe(result => {
-            console.log("Marca Caminhão" + marcaCaminhao.id + " atualizada com sucesso");
+            this.marcaCaminhaoResultEditar = result;
+            this.toastr.success(this.marcaCaminhaoResultEditar.result, 'Marcas de Caminhão');
 
             // volta para a listagem
             this.router.navigate(['/marcasCaminhao']);
-          }, error => console.error(error));
+          }, error => {
+            this.toastr.error(error.error.title, 'Marcas de Caminhão');
+          });
     } else {
       // inserir
 
@@ -86,11 +92,14 @@ export class MarcaCaminhaoEditarComponent implements OnInit {
       this.http
         .post<MarcaCaminhao>(url, marcaCaminhao)
         .subscribe(result => {
-          console.log("Marca " + result.id + "cadastrada com sucesso");
+          this.marcaCaminhaoResultInserir = result;
+          this.toastr.success(this.marcaCaminhaoResultInserir.result, 'Marcas de Caminhão');
 
           // voltar para a listagem
           this.router.navigate(['/marcasCaminhao']);
-        }, error => console.log(error));
+        }, error => {
+          this.toastr.error(error.error.title, 'Marcas de Caminhão');
+        });
     }
   }
 }
