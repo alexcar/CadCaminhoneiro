@@ -84,7 +84,7 @@ export class ModeloCaminhaoEditarComponent implements OnInit {
         this.marcasCaminhaoResult = result;
 
         if (this.marcasCaminhaoResult.isError) {
-          console.log(this.marcasCaminhaoResult.message);
+          this.toastr.error(this.marcasCaminhaoResult.message, 'Modelos de Caminhão');
         } else {
           this.marcasCaminhao = this.marcasCaminhaoResult.result.data;
         }
