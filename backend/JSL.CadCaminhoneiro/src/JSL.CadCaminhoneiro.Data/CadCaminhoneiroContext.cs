@@ -20,6 +20,7 @@ namespace JSL.CadCaminhoneiro.Data
         public DbSet<Caminhao> Caminhao { get; set; }
         public DbSet<MarcaCaminhao> MarcaCaminhao { get; set; }
         public DbSet<ModeloCaminhao> ModeloCaminhao { get; set; }
+        public DbSet<Estado> Estado { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

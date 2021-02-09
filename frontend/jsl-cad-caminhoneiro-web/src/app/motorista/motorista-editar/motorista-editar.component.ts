@@ -14,6 +14,7 @@ import { ModeloCaminhaoResultSemPaginacao } from 'src/app/modelo-caminhao/modelo
 import { MotoristaIncluirRequest } from './../motoristaIncluirRequest';
 import { MotoristaAlterarRequest } from '../motoristaAlterarRequest';
 import { Validacoes } from './../validacoes';
+import { Estado } from './../estados';
 
 @Component({
   selector: 'app-motorista-editar',
@@ -45,8 +46,11 @@ export class MotoristaEditarComponent implements OnInit {
 
   public marcaSelecionadaId: string = '';
   public modeloSelecionadoId: string = '';
+  public estadoSelecionado: string = '';
 
   public dataNascimento!: any;
+  public estados!: Estado[];
+  public estadosResult: any;
 
   constructor(
     private ActivatedRoute: ActivatedRoute,
@@ -105,6 +109,9 @@ export class MotoristaEditarComponent implements OnInit {
     // Carrega os modelos
     this.loadModelosCaminhao();
 
+    // Carrega os estados
+    this.loadEstados();
+
     // recupera o ID do parâmetro 'id'
     this.id = this.ActivatedRoute.snapshot.params.id;
 
@@ -120,6 +127,7 @@ export class MotoristaEditarComponent implements OnInit {
 
         this.marcaSelecionadaId = this.motorista.caminhaoDto.marcaCaminhaoListDto.id;
         this.modeloSelecionadoId = this.motorista.caminhaoDto.modeloCaminhaoListDto.id;
+        this.estadoSelecionado = this.motorista.enderecoDto.uf;
 
         this.motorista.dataNascimento = formatDate(this.motorista.dataNascimento, 'yyyy-MM-dd', 'en');
         this.motorista.dataExpedicaoRegistroGeral = formatDate(this.motorista.dataExpedicaoRegistroGeral, 'yyyy-MM-dd', 'en');
@@ -151,6 +159,21 @@ export class MotoristaEditarComponent implements OnInit {
           this.toastr.error(this.marcasCaminhaoResult.message, 'Motorista');
         } else {
           this.marcasCaminhao = this.marcasCaminhaoResult.result;
+        }
+      }, error => {
+        this.toastr.error(error.error.title, 'Motorista');
+      });
+  }
+
+  private loadEstados() {
+    this.http.get<Estado>(this.baseUrl + 'v1/motorista/listar-estados')
+      .subscribe(result => {
+        this.estadosResult = result;
+
+        if (this.estadosResult.isError) {
+          this.toastr.error(this.estadosResult.message, 'Motorista');
+        } else {
+          this.estados = this.estadosResult.result;
         }
       }, error => {
         this.toastr.error(error.error.title, 'Motorista');

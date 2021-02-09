@@ -35,21 +35,19 @@ namespace JSL.CadCaminhoneiro.Data.Repository
 
         public async Task<IEnumerable<MotoristaListDto>> ListarTodosSemPaginacaoAsync()
         {
-            try
-            {
-                return await _context.Motorista
+            return await _context.Motorista
                 .AsNoTracking()
                 .MapMotoristaToDto()
                 .ApplySort("nome")
                 .ToListAsync();
-            }
-            catch (Exception e)
-            {
-                var msg = e.Message;
-                throw;
-            }
-            
-            
+        }
+
+        public async Task<IEnumerable<EstadoListDto>> ListarEstadosAsync()
+        {
+            return await _context.Estado
+                .AsNoTracking()
+                .MapEstadoToDto()
+                .ToListAsync();
         }
 
         public async Task<bool> ExisteAsync(Guid id)

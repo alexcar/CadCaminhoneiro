@@ -4,14 +4,16 @@ using JSL.CadCaminhoneiro.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JSL.CadCaminhoneiro.Data.Migrations
 {
     [DbContext(typeof(CadCaminhoneiroContext))]
-    partial class CadCaminhoneiroContextModelSnapshot : ModelSnapshot
+    [Migration("20210209185656_TabelaEstado")]
+    partial class TabelaEstado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

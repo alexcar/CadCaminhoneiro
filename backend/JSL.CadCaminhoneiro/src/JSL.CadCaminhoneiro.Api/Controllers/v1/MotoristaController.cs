@@ -95,6 +95,17 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
             return motorista;
         }
 
+        // GET api/v1/motorista/listar-estados
+        [HttpGet]
+        [Route("listar-estados")]
+        [ProducesResponseType(typeof(IEnumerable<EstadoListDto>), Status200OK)]
+        public async Task<IEnumerable<EstadoListDto>> ListarEstados()
+        {
+            var estados = await _repository.ListarEstadosAsync();
+
+            return estados;
+        }
+
         // POST: api/v1/motorista
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse), Status201Created)]

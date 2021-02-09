@@ -11,6 +11,7 @@ namespace JSL.CadCaminhoneiro.Domain.Interfaces
         Task<MotoristaListDto> ObterPorIdQueryResponseAsync(Guid id);
         Task<IEnumerable<MotoristaListDto>> ListarTodosQueryResponseAsync(string sort, string filter, int pageNumber, int pageSize);
         Task<IEnumerable<MotoristaListDto>> ListarTodosSemPaginacaoAsync();
+        Task<IEnumerable<EstadoListDto>> ListarEstadosAsync();
         Task<bool> ExisteAsync(Guid id);
         Task<Motorista> ExisteAsync(string cpf, string numeroRegistroGeral, string numeroRegistroHabilitacao);
         Task<ModeloCaminhao> ObterOriginalAsync(Guid id);        

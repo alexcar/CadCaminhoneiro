@@ -7,9 +7,6 @@ namespace JSL.CadCaminhoneiro.Data.Repository.QueryObjects
     {
         public static IQueryable<MotoristaListDto> MapMotoristaToDto(this IQueryable<Motorista> motoristas)
         {
-            var foo = motoristas;
-            
-            
             return motoristas.Select(p => new MotoristaListDto
             {
                 Id = p.Id,
