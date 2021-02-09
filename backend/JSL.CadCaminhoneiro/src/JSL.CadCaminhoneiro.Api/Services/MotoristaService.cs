@@ -99,20 +99,20 @@ namespace JSL.CadCaminhoneiro.Api.Services
 
             var endereco = new Endereco(
                 entity.Logradouro, entity.Numero, entity.Complemento,
-                entity.Bairro, entity.Municipio, entity.Uf, entity.Cep);
+                entity.Bairro, entity.Municipio, entity.Uf, entity.Cep, motorista.Id);
             endereco.Incluir(DateTime.Now);            
             motorista.IncluirEndereco(endereco);
 
             var habilitacao = new Habilitacao(
                 entity.NumeroRegistroHabilitacao, entity.CategoriaHabilitacao,
                 entity.DataPrimeiraHabilitacao, entity.DataValidadeHabilitacao,
-                entity.DataEmissaoHabilitacao, entity.ObservacaoHabilitacao);
+                entity.DataEmissaoHabilitacao, entity.ObservacaoHabilitacao, motorista.Id);
             habilitacao.Incluir(DateTime.Now);
             motorista.IncluirHabilitacao(habilitacao);
 
             var caminhao = new Caminhao(
                 entity.Placa, entity.Eixo, entity.CaminhaoObservacao,
-                marcaCaminhao.Id, modeloCaminhao.Id);
+                marcaCaminhao.Id, modeloCaminhao.Id, motorista.Id);
             caminhao.Incluir(DateTime.Now);
             motorista.IncluirCaminhao(caminhao);
 

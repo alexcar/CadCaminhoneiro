@@ -5,47 +5,47 @@ export interface Motorista {
   id: string;
   nome: string;
   cpf: string;
-  dataNascimento: Date;
+  dataNascimento: string;
   nomePai: string;
   nomeMae: string;
   naturalidade: string;
   numeroRegistroGeral: string;
   orgaoExpedicaoRegistroGeral: string;
-  dataExpedicaoRegistroGeral: Date;
-  EnderecoDto: EnderecoDto,
-  HabilitacaoDto: HabilitacaoDto,
-  CaminhaoDto: CaminhaoDto
+  dataExpedicaoRegistroGeral: string;
+  enderecoDto: EnderecoDto,
+  habilitacaoDto: HabilitacaoDto,
+  caminhaoDto: CaminhaoDto
 }
 
 export interface EnderecoDto {
-  Id: string;
-  MotoristaId: string;
-  Logradouro: string;
-  Numero: string;
-  Complemento: string;
-  Bairro: string;
-  Municipio: string;
-  Uf: string;
-  Cep: string;
+  id: string;
+  motoristaId: string;
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  municipio: string;
+  uf: string;
+  cep: string;
 }
 
 export interface HabilitacaoDto {
-  Id: string;
-  MotoristaId: string;
-  NumeroRegistro: string;
-  Categoria: string;
-  DataPrimeiraHabilitacao: Date;
-  DataValidade: Date;
-  DataEmissao: Date;
-  Observacao: string;
+  id: string;
+  motoristaId: string;
+  numeroRegistro: string;
+  categoria: string;
+  dataPrimeiraHabilitacao: string;
+  dataValidade: string;
+  dataEmissao: string;
+  observacao: string;
 }
 
 export interface CaminhaoDto {
-  Id: string;
-  MotoristaId: string;
-  Placa: string;
-  Eixo: string;
-  Observacao: string;
-  MarcaCaminhaoListDto: MarcaCaminhao;
-  ModeloCaminhaoListDto: ModeloCaminhao;
+  id: string;
+  motoristaId: string;
+  placa: string;
+  eixo: string;
+  observacao: string;
+  marcaCaminhaoListDto: MarcaCaminhao;
+  modeloCaminhaoListDto: ModeloCaminhao;
 }

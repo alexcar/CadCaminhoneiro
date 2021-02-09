@@ -12,7 +12,8 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             string bairro,
             string municipio,
             string uf,
-            string cep)
+            string cep,
+            Guid motoristaId)
         {
             Logradouro = logradouro;
             Numero = numero;
@@ -21,6 +22,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             Municipio = municipio;
             Uf = uf;
             Cep = cep;
+            MotoristaId = motoristaId;
         }
         
         protected Endereco() { }        

@@ -173,6 +173,9 @@ namespace JSL.CadCaminhoneiro.Data.Repository
 
         public async Task ExcluirAsync(Motorista entity)
         {
+            _context.Entry(entity.Caminhao).State = EntityState.Deleted;
+            _context.Entry(entity.Endereco).State = EntityState.Deleted;
+            _context.Entry(entity.Habilitacao).State = EntityState.Deleted;
             _context.Motorista.Remove(entity);
             await _context.SaveChangesAsync();
         }       

@@ -83,8 +83,8 @@ namespace JSL.CadCaminhoneiro.Api.Controllers.v1
 
         // GET: api/v1/motorista/982ea2dd-d8c1-4660-a0f6-ed3a491b2b9e
         [HttpGet("{id:Guid}")]
-        [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status200OK)]
-        [ProducesResponseType(typeof(ModeloCaminhaoListDto), Status404NotFound)]
+        [ProducesResponseType(typeof(MotoristaListDto), Status200OK)]
+        [ProducesResponseType(typeof(MotoristaListDto), Status404NotFound)]
         public async Task<MotoristaListDto> ObterPorId(Guid id)
         {
             var motorista = await _repository.ObterPorIdQueryResponseAsync(id);

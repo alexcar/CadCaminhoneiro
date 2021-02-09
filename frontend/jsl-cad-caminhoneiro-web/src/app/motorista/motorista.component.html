@@ -10,7 +10,7 @@
   </button>
 </div><br/>
 
-<table *ngIf="!motoristas" mat-table [dataSource]="motoristas" class="mat-elevation-z8"
+<table mat-table [dataSource]="motoristas" class="mat-elevation-z8"
  [hidden]="!motoristas">
   <ng-container matColumnDef="nome">
     <th mat-header-cell *matHeaderCellDef>Nome</th>
@@ -47,7 +47,7 @@
 </table>
 
 <!-- Pagination directive -->
-<mat-paginator *ngIf="!motoristas" [hidden]="!motoristas"
+<mat-paginator [hidden]="!motoristas"
     [pageSize]="10"
     [pageSizeOptions]="[10, 20, 50]"
     showFirstLastButtons></mat-paginator>

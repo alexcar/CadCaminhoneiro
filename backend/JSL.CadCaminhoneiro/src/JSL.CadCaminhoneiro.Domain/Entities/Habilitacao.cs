@@ -11,7 +11,8 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             DateTime dataPrimeiraHabilitacao,
             DateTime dataValidade,
             DateTime dataEmissao,
-            string observacao)
+            string observacao,
+            Guid motoristaId)
         {
             NumeroRegistro = numeroRegistro;
             Categoria = categoria;
@@ -19,6 +20,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             DataValidade = dataValidade;
             DataEmissao = dataEmissao;
             Observacao = observacao;
+            MotoristaId = motoristaId;
         }
         
         protected Habilitacao() { }

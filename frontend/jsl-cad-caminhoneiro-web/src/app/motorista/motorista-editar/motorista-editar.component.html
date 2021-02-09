@@ -38,6 +38,9 @@
       <div *ngIf="f.cpf?.errors?.required">
          O CPF é obrigatório
       </div>
+      <div *ngIf="f.cpf?.errors?.cpfInvalido">
+        Informe um CPF válido
+     </div>
     </div>
   </div>
 
@@ -46,6 +49,7 @@
     <br />
     <input type="date" id="dataNascimento"
            formControlName="dataNascimento" required
+
            placeholder="" style="width: 200px;"
            class="form-control" />
 
@@ -365,7 +369,7 @@
       <div class="form-group">
         <label for="observacao">Observaçao:</label>
         <br />
-        <input type="text" id="observacao"
+        <input type="text" id="habilitacaoObservacao"
                formControlName="observacao"
                placeholder="" maxlength="50" style="width: 500px;"
                class="form-control" />
@@ -379,7 +383,7 @@
         <br />
         <select class="custom-select"
           (change)="onMarcaSelecionada($event)"
-          [(ngModel)]="marcaSelecionadaId"
+          [value]="marcaSelecionadaId"
           formControlName="marcaCaminhaoId"
           id="marcasCaminhao"
           style="width: 200px;">
@@ -403,7 +407,7 @@
         <select [attr.disabled]="marcaSelecionadaId ? null : ''"
           class="custom-select"
           (change)="onModeloSelecionado($event)"
-          [(ngModel)]="modeloSelecionadoId"
+          [value]="modeloSelecionadoId"
           formControlName="modeloCaminhaoId"
           id="modelosCaminhao"
           style="width: 200px;">
@@ -458,7 +462,7 @@
       <div class="form-group">
         <label for="observacao">Observaçao:</label>
         <br />
-        <input type="text" id="observacao"
+        <input type="text" id="caminhaoDtoObservacao"
                formControlName="observacao"
                placeholder="" maxlength="30" style="width: 500px;"
                class="form-control" />
@@ -479,11 +483,11 @@
               Enviar
           </button>
           <button type="submit"
-                  [routerLink]="['/modelosCaminhao']"
+                  [routerLink]="['/motoristas']"
                   class="btn">
               Cancelar
           </button>
       </div>
   </div>
 </div>
-
+<br/>

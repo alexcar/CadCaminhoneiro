@@ -10,13 +10,15 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             byte eixo, // sql server tinyint
             string observacao,
             Guid marcaCaminhaoId,
-            Guid modeloCaminhaoId)
+            Guid modeloCaminhaoId,
+            Guid motoristaId)
         {
             Placa = placa;
             Eixo = eixo;
             Observacao = observacao;
             MarcaCaminhaoId = marcaCaminhaoId;
             ModeloCaminhaoId = modeloCaminhaoId;
+            MotoristaId = motoristaId;
         }
         
         protected Caminhao() { }
