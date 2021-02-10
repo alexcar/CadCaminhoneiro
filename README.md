@@ -29,7 +29,7 @@ Preparar o Backend e o Frontend para testar o aplicativo Cadastro de Caminhoneir
 
 ### Preparando o projeto Frontend
 1. Abra o prompt do DOS e acesse a pasta da aplicação no caminho:<br> 
-`code\CadCaminhoneiro\frontend\jsl-cad-caminhoneiro-web`
+`cd code\CadCaminhoneiro\frontend\jsl-cad-caminhoneiro-web`
 2. Atualize os pacotes digitando o comando:<br> 
 `npm i`
 3. Execute a aplicação digitando o comando:<br> 
