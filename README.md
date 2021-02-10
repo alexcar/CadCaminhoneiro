@@ -24,7 +24,7 @@ Preparar o Backend e o Frontend para testar o aplicativo Cadastro de Caminhoneir
 `add-migration Inicial`<br>
 `update-database`
 6. Em seguida, execute a aplicação em modo debugger pressionando F5.<br>
-5. O serviço Api deve ficar disponível no endereço:<br> 
+5. O serviço Api deverá ficar disponível no endereço:<br> 
 `https://localhost:44313/swagger/index.html`
 
 ### Preparando o projeto Frontend
