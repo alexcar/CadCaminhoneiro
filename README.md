@@ -20,10 +20,10 @@ Preparar o Backend e o Frontend para testar o aplicativo Cadastro de Caminhoneir
 `code\CadCaminhoneiro\Backend\JSL.CadCaminhoneiro\JSL.CadCaminhoneiro.sln`
 3. Realize a compilação da solução.
 4. Abra o Package Manager Console e selecionar o projeto JSL.CadCaminhoneiro.Data
-5. Execute os comandos abaixo na janela Package Manager Console para criar e popular o banco de dados do tipo localdb
+5. Execute os comandos abaixo na janela Package Manager Console para criar e popular o banco de dados do tipo localdb<br>
 `add-migration Inicial`
 `update-database`
-6. Em seguida, execute a aplicação em modo debugger pressionando F5.
+6. Em seguida, execute a aplicação em modo debugger pressionando F5.<br>
 5. O serviço Api deve ficar disponível no endereço:<br> 
 `https://localhost:44313/swagger/index.html`
 
