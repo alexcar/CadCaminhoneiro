@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using JSL.CadCaminhoneiro.Domain.Entities;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace JSL.CadCaminhoneiro.Data
 {
@@ -30,6 +28,8 @@ namespace JSL.CadCaminhoneiro.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            modelBuilder.Seed();
         }        
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JSL.CadCaminhoneiro.Data.Migrations
 {
     [DbContext(typeof(CadCaminhoneiroContext))]
-    [Migration("20210209185656_TabelaEstado")]
-    partial class TabelaEstado
+    [Migration("20210210002907_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,19 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Caminhao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1f510b91-b8b5-43c7-9e68-abb51560ddba"),
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 311, DateTimeKind.Local).AddTicks(3998),
+                            Eixo = (byte)5,
+                            MarcaCaminhaoId = new Guid("468d7d0d-93cb-4cbc-8b6a-430a93a4a639"),
+                            ModeloCaminhaoId = new Guid("0a18d8e0-3d35-4e36-ba4d-38ecc9b91d66"),
+                            MotoristaId = new Guid("a7772991-4e68-4403-b323-2be7709cef6b"),
+                            Observacao = "cor azul",
+                            Placa = "MKT9090"
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.Endereco", b =>
@@ -114,6 +127,21 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Endereco");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ed70e7f9-bb3a-4af5-b17b-5894399b5c22"),
+                            Bairro = "São Judas",
+                            Cep = "07500000",
+                            Complemento = "centro",
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 310, DateTimeKind.Local).AddTicks(5972),
+                            Logradouro = "Rua Central",
+                            MotoristaId = new Guid("a7772991-4e68-4403-b323-2be7709cef6b"),
+                            Municipio = "São Paulo",
+                            Numero = "100",
+                            Uf = "SP"
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.Estado", b =>
@@ -127,6 +155,143 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                     b.HasKey("Uf");
 
                     b.ToTable("Estado");
+
+                    b.HasData(
+                        new
+                        {
+                            Uf = "AC",
+                            Descricao = "Acre"
+                        },
+                        new
+                        {
+                            Uf = "AL",
+                            Descricao = "Alagoas"
+                        },
+                        new
+                        {
+                            Uf = "AM",
+                            Descricao = "Amazonas"
+                        },
+                        new
+                        {
+                            Uf = "AP",
+                            Descricao = "Amapá"
+                        },
+                        new
+                        {
+                            Uf = "BA",
+                            Descricao = "Bahia"
+                        },
+                        new
+                        {
+                            Uf = "CE",
+                            Descricao = "Ceará"
+                        },
+                        new
+                        {
+                            Uf = "DF",
+                            Descricao = "Distrito Federal"
+                        },
+                        new
+                        {
+                            Uf = "ES",
+                            Descricao = "Espírito Santo"
+                        },
+                        new
+                        {
+                            Uf = "GO",
+                            Descricao = "Goiás"
+                        },
+                        new
+                        {
+                            Uf = "MA",
+                            Descricao = "Maranhão"
+                        },
+                        new
+                        {
+                            Uf = "MG",
+                            Descricao = "Minas Gerais"
+                        },
+                        new
+                        {
+                            Uf = "MS",
+                            Descricao = "Mato Grosso do Sul"
+                        },
+                        new
+                        {
+                            Uf = "MT",
+                            Descricao = "Mato Grosso"
+                        },
+                        new
+                        {
+                            Uf = "PA",
+                            Descricao = "Pará"
+                        },
+                        new
+                        {
+                            Uf = "PB",
+                            Descricao = "Paraíba"
+                        },
+                        new
+                        {
+                            Uf = "PE",
+                            Descricao = "Pernambuco"
+                        },
+                        new
+                        {
+                            Uf = "PI",
+                            Descricao = "Piauí"
+                        },
+                        new
+                        {
+                            Uf = "PR",
+                            Descricao = "Paraná"
+                        },
+                        new
+                        {
+                            Uf = "RJ",
+                            Descricao = "Rio de Janeiro"
+                        },
+                        new
+                        {
+                            Uf = "RN",
+                            Descricao = "Rio Grande do Norte"
+                        },
+                        new
+                        {
+                            Uf = "RO",
+                            Descricao = "Rondônia"
+                        },
+                        new
+                        {
+                            Uf = "RR",
+                            Descricao = "Roraima"
+                        },
+                        new
+                        {
+                            Uf = "RS",
+                            Descricao = "Rio Grande do Sul"
+                        },
+                        new
+                        {
+                            Uf = "SC",
+                            Descricao = "Santa Catarina"
+                        },
+                        new
+                        {
+                            Uf = "SE",
+                            Descricao = "Sergipe"
+                        },
+                        new
+                        {
+                            Uf = "SP",
+                            Descricao = "São Paulo"
+                        },
+                        new
+                        {
+                            Uf = "TO",
+                            Descricao = "Tocantins"
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.Habilitacao", b =>
@@ -171,6 +336,20 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Habilitacao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8bc2cef5-86ef-45d3-bc17-baf49e5339df"),
+                            Categoria = "E",
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 311, DateTimeKind.Local).AddTicks(194),
+                            DataEmissao = new DateTime(2011, 2, 9, 21, 29, 7, 310, DateTimeKind.Local).AddTicks(6474),
+                            DataPrimeiraHabilitacao = new DateTime(2011, 2, 9, 21, 29, 7, 310, DateTimeKind.Local).AddTicks(6465),
+                            DataValidade = new DateTime(2031, 2, 9, 21, 29, 7, 310, DateTimeKind.Local).AddTicks(6472),
+                            MotoristaId = new Guid("a7772991-4e68-4403-b323-2be7709cef6b"),
+                            NumeroRegistro = "7834738",
+                            Observacao = "sem restrições"
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.MarcaCaminhao", b =>
@@ -193,6 +372,14 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MarcaCaminhao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("468d7d0d-93cb-4cbc-8b6a-430a93a4a639"),
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 306, DateTimeKind.Local).AddTicks(8823),
+                            Descricao = "Ford"
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.ModeloCaminhao", b =>
@@ -224,6 +411,32 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                     b.HasIndex("MarcaCaminhaoId");
 
                     b.ToTable("ModeloCaminhao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0a18d8e0-3d35-4e36-ba4d-38ecc9b91d66"),
+                            Ano = "1990",
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 309, DateTimeKind.Local).AddTicks(4606),
+                            Descricao = "Cargo 1113",
+                            MarcaCaminhaoId = new Guid("468d7d0d-93cb-4cbc-8b6a-430a93a4a639")
+                        },
+                        new
+                        {
+                            Id = new Guid("e3067d73-1f00-4078-9433-d839383c8599"),
+                            Ano = "2000",
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 309, DateTimeKind.Local).AddTicks(5158),
+                            Descricao = "Cargo 1114",
+                            MarcaCaminhaoId = new Guid("468d7d0d-93cb-4cbc-8b6a-430a93a4a639")
+                        },
+                        new
+                        {
+                            Id = new Guid("328a0492-3076-40fa-95bc-e2d61abb5aab"),
+                            Ano = "2001",
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 309, DateTimeKind.Local).AddTicks(5171),
+                            Descricao = "Cargo 3031",
+                            MarcaCaminhaoId = new Guid("468d7d0d-93cb-4cbc-8b6a-430a93a4a639")
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.Motorista", b =>
@@ -276,6 +489,22 @@ namespace JSL.CadCaminhoneiro.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Motorista");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a7772991-4e68-4403-b323-2be7709cef6b"),
+                            Cpf = "22627804804",
+                            DataCriacao = new DateTime(2021, 2, 9, 21, 29, 7, 310, DateTimeKind.Local).AddTicks(1512),
+                            DataExpedicaoRegistroGeral = new DateTime(2006, 2, 9, 21, 29, 7, 309, DateTimeKind.Local).AddTicks(7085),
+                            DataNascimento = new DateTime(1991, 2, 9, 21, 29, 7, 309, DateTimeKind.Local).AddTicks(7005),
+                            Naturalidade = "São Paulo",
+                            Nome = "João da Silva Junior",
+                            NomeMae = "Maria da Silva",
+                            NomePai = "João da Silva",
+                            NumeroRegistroGeral = "083943218",
+                            OrgaoExpedicaoRegistroGeral = "SSP-SP"
+                        });
                 });
 
             modelBuilder.Entity("JSL.CadCaminhoneiro.Domain.Entities.Caminhao", b =>

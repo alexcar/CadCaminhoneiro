@@ -42,6 +42,11 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             DataCriacao = dataCriacao;
         }
 
+        public void IncluirMotorista(Motorista motorista)
+        {
+            Motorista = motorista;
+        }
+
         public void Alterar(
             string logradouro,
             string numero,

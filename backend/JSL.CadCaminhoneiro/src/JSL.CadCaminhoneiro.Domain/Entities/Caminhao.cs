@@ -18,7 +18,7 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
             Observacao = observacao;
             MarcaCaminhaoId = marcaCaminhaoId;
             ModeloCaminhaoId = modeloCaminhaoId;
-            MotoristaId = motoristaId;
+            MotoristaId = motoristaId;            
         }
         
         protected Caminhao() { }
@@ -38,6 +38,11 @@ namespace JSL.CadCaminhoneiro.Domain.Entities
         public void Incluir(DateTime dataCriacao)
         {
             DataCriacao = dataCriacao;
+        }
+
+        public void IncluirMotorista(Motorista motorista)
+        {
+            Motorista = motorista;
         }
 
         public void Alterar(
