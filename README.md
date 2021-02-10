@@ -36,4 +36,4 @@ Preparar o Backend e o Frontend para testar o aplicativo Cadastro de Caminhoneir
 `ng serve -- open`
 6. O navegador padrão será executado e a aplicação ficará disponível no endereço:<br> 
 `http://localhost:4200`
-7. Em seguida realize a manutenção das aeronaves.
+7. Em seguida realize a manutenção dos cadastros.
